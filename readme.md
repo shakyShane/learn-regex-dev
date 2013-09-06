@@ -1,4 +1,4 @@
-###This is the development repo for the [Learn Regex](shakyshane.github.com/learn-regex) app.
+###This is the development repo for the [Learn Regex](http://shakyshane.github.com/learn-regex) app.
 
 Learn Regex is designed to be an introduction to regular expressions in Javascript for beginners. Users can select 'sections' of a regex and watch it being built right there on the page. The sections can then be re-ordered or removed & there's the opportunity to use the newly created regex in a test.
 
