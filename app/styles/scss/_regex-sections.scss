@@ -1,0 +1,107 @@
+.regex-section {
+  @include clearfix();
+  padding-left: $base-spacing;
+  font-family: Consolas, 'Liberation Mono', Courier, monospace;
+}
+
+.regex-section__title {
+  color: orange;
+  //background: rgb(43, 51, 70);
+  margin-bottom: 0;
+  //padding: $base-spacing;
+  p {
+    margin: 0;
+    background: rgb(59, 69, 95);
+    padding: 5px 5px;
+    display: inline-block;
+    font-size: 12px;
+  }
+}
+
+.regex-section__input {
+  input {
+    height: 40px;
+    padding-left: $base-spacing;
+    max-width: 100%;
+  }
+  &.range {
+    input {
+      outline: 0;
+      border: 0;
+      width: 50%;
+      float: left;
+      &:first-child {
+        border-right: 2px solid rgb(59, 69, 95);
+      }
+    }
+  }
+  p {
+    margin: 0;
+    line-height: 40px;
+    color: orange;
+    font-size: 12px;
+    padding-left: $base-spacing;
+  }
+  height: 40px;
+  width: 80%;
+  background: rgb(59, 69, 95);
+  float: left;
+  margin-bottom: $base-spacing;
+}
+
+.regex-section__button {
+  width: 20%;
+  background: rgb(76, 89, 123);
+  height: 40px;
+  color: white;
+  //text-shadow: 1px 1px 1px black;
+  text-align: center;
+  line-height: 42px;
+  float: right;
+  transition: all .1s;
+  perspective: 600px;
+  span {
+    display: inline-block;
+    transition: all .4s;
+  }
+  &:hover {
+
+    cursor: pointer;
+    background: rgb(76, 91, 125);
+    span {
+      transform: rotateX( 180deg );
+      color: orange;
+    }
+  }
+  &:active {
+    box-shadow: inset 3px 0px 2px 0px black;
+    span {
+      color: white;
+      text-shadow: 1px 1px 1px #26475c;
+    }
+  }
+}
+.pure-button-success,
+.pure-button-error,
+.pure-button-warning,
+.pure-button-secondary {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.pure-button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+.pure-button-error {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.pure-button-warning {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.pure-button-secondary {
+  background: rgb(66, 184, 221); /* this is a light blue */
+}

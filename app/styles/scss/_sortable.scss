@@ -1,0 +1,57 @@
+.sortable.grid {
+  overflow: hidden;
+  display: inline-block;
+  margin-left: 0;
+  padding: 0;
+}
+
+.sortable li {
+  @include clearfix;
+  list-style: none;
+  //border: 1px solid #CCC;
+  background: $c-blue-1;
+  color: orange;
+  //color: #1C94C4;
+  display: block;
+  float: left;
+  height: 40px;
+  width: 150px;
+  font-size: 12px;
+  position: relative;
+  line-height: 14px;
+  padding-left: $base-spacing;
+  padding-top: $base-spacing;
+  text-align: left;
+  margin-bottom: $base-spacing;
+  //width: 300px;
+  .section-param {
+    display: block;
+  }
+  .remove-btn {
+    color: white;
+    position: absolute;
+    height: 40px;
+    background: $c-blue-light;
+    width: 40px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    line-height: 40px;
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+      background: $c-blue-1;
+      box-shadow: inset 3px 0px 2px 0px black;
+    }
+  }
+}
+.handles span {
+  cursor: move;
+}
+.sortable.grid li {
+  /*line-height: 80px;*/
+  //float: left;
+  //width: 80px;
+  //height: 80px;
+  //text-align: center;
+}

@@ -1,0 +1,24 @@
+li.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background: none;
+}
+
+@keyframes button-enter {
+  0% { transform: scale(0) }
+  100% { transform: scale(1) }
+}
+
+.regex-btn {
+  margin-right: 10px;
+  animation-name: button-enter;
+  animation-duration: .2s;
+}
+
+.regex-btn small {
+  color: lightblue;
+}
+
+.pure-button-xsmall {
+  font-size: 70%;
+  margin-left: 10px;
+}

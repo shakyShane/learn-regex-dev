@@ -1,0 +1,25 @@
+
+@keyframes pulse {
+  50% { transform: rotateX( 180deg ); }
+}
+
+.intro {}
+
+  .intro__arrow {
+    font-size: 12px;
+    margin: 0;
+    perspective: 600px;
+    span[class^="icon"] {
+      display: inline-block;
+      color: $c-blue-light;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  p.intro__text {
+    font-size: 12px;
+    margin: 0;
+    span[class^="icon"] {
+      color: $c-blue-light;
+    }
+  }

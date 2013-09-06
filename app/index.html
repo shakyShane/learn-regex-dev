@@ -1,0 +1,192 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css({.tmp,app}) styles/style.css -->
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- endbuild -->
+</head>
+<body ng-app="ngRegexApp">
+
+<div class="pure-g-r" id="layout">
+    <a href="#menu" id="menuLink" class="pure-menu-link">
+        <span></span>
+    </a>
+
+    <!-- AllApp -->
+    <div ng-controller="AllApp">
+
+        <!-- Method-List -->
+        <div class="pure-u" id="method-list" ng-controller="ListCtrl">
+            <div class="pure-menu pure-menu-open">
+
+                <div class="regex-section">
+                    <p>Add sections here</p>
+                </div>
+
+                <div class="regex-section" ng-repeat="(i, method) in methods|sortByMethod">
+
+                    <div class="regex-section__title" ng-if="method.input || method.range"><p>{{method.name}}</p></div>
+
+                    <div class="regex-section__input {{ (method.range) ? 'range' : null }}">
+
+                        <form action="" ng-submit="addSection(method, method.inputVal);">
+
+                            <input
+                                    type="text"
+                                    class="method-input"
+                                    id="input-{{method.method}}"
+                                    ng-model="method.inputVal"
+                                    placeholder="..."
+                                    ng-if="method.input"/>
+                        </form>
+
+                        <form action="" ng-submit="addRangeSection(method, method.inputVal1, method.inputVal2);">
+
+                            <input
+                                    type="text"
+                                    class="range-input"
+                                    id="range-input-01"
+                                    ng-model="method.inputVal1"
+                                    placeholder="..."
+                                    ng-if="method.range"/>
+
+                            <input
+                                    type="text"
+                                    class="range-input"
+                                    id="range-input-02"
+                                    placeholder="..."
+                                    ng-model="method.inputVal2"
+                                    ng-if="method.range"/>
+                        </form>
+
+                        <!-- Title for methods with no input -->
+                        <p ng-if="!method.input">{{method.name}}</p>
+
+                    </div>
+
+
+                    <div
+                            class="regex-section__button"
+                            id="button-add-range"
+                            ng-if="method.range"
+                            ng-click="addRangeSection(method, method.inputVal1, method.inputVal2);">
+                        <span class="icon-arrow-right-2"></span>
+                    </div>
+
+                    <div
+                            class="regex-section__button method-add"
+                            id="button-add-{{method.method}}"
+                            ng-if="!method.range"
+                            ng-click="addSection(method, method.inputVal);">
+                        <span class="icon-arrow-right-2"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1" id="main" ng-controller="MainCtrl">
+
+            <div class="header">
+                <h1>Learn REGEX</h1>
+                <h2>An introduction to regular expressions in JavaScript</h2>
+            </div>
+
+            <div class="content">
+
+                <ul id="btn-container" ng-controller="DraggleCtrl" class="sortable grid">
+
+                    <li
+                            ng-repeat="section in data.regexSections | orderBy:section.sortOrder"
+                            on-finish-render="addSortable"
+                            data-id="{{section.$$hashKey}}"
+                            class="regex-btn">{{section.name}}
+                        <small class="section-param">{{ section.param }}</small>
+                        <span
+                                class="remove-btn icon-close"
+                                ng-click="removeSection($index)"
+                                ></span>
+                    </li>
+                </ul>
+
+                <div class="error">{{data.errorMessage}}</div>
+
+                <div class="intro" id="intro" ng-show="!data.regexSections.length">
+                    <p class="intro__arrow"><span class="icon-arrow-left"></span></p>
+                     <p class="intro__text">Add sections from the menu on the left & you'll see the Regex being built up below.</p>
+
+                </div>
+
+                <!--<p>Javascript Regular Expression:</p>-->
+                <div class="regex">
+
+                    <pre class="snippet">
+<code id="regexCode">{{ data.regex }}</code>
+
+{{ data.regexTestCode }}</pre>
+
+                </div>
+
+                <div id="test-container" ng-show="data.regexSections.length">
+
+                <p>Enter something to test:</p>
+                    <input
+                            type="text"
+                            id="input-test"
+                            ng-model="data.testString"
+                            ng-keyup="runTest(data.testString)"/>
+
+                <p> <span>Result: <span id="result-output">{{data.result}}</span> <span result-output id="result-output-icon"></span></span></p>
+
+                <button class="pure-button" id="btn-run-test" ng-click="runTest(data.testString)">Test</button>
+
+                <button class="pure-button" ng-click="reset()" id="btn-reset">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="legal pure-g-r">
+            <div class="pure-u-1">
+                <div class="l-box legal-logo">
+                    <a href="http://github.com/shakyshane" class="share-icon" title="This project is on github">
+                        <span class="icon-github-3"></span>
+                    </a>
+                    <a href="https://twitter.com/shaneOsbourne" class="share-icon" title="I'm on twitter, come say hi!">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="bower_components/jquery/jquery.min.js"></script>
+<script src="bower_components/angular/angular.1.1.5.min.js"></script>
+<script src="bower_components/html5sortable/jquery.sortable.js"></script>
+<script src="bower_components/verbalexpressions/VerbalExpressions.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/services/main.js"></script>
+<script src="scripts/services/methods.js"></script>
+<script src="scripts/services/dataStore.js"></script>
+<script src="scripts/controllers/listController.js"></script>
+<script src="scripts/controllers/mainController.js"></script>
+<script src="scripts/filters/sortMethods.js"></script>
+<script src="scripts/directives/result-output.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

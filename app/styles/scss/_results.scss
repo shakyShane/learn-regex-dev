@@ -1,0 +1,38 @@
+body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
+  -webkit-backface-visibility: hidden;
+}
+
+.animated {
+  animation-fill-mode: both;
+}
+
+
+@keyframes result-switch {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+span[class^=icon-thumbs] {
+  display: inline-block;
+  transition: all .5s;
+}
+
+  .icon-thumbs-up {
+    color: #00cd00;
+    animation-name: result-switch;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  .icon-thumbs-up-2 {
+    color: red;
+  }
+
+

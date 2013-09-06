@@ -1,0 +1,157 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body ng-app="ngRegexApp">
+
+<div class="pure-g-r content" id="layout">
+    <div class="pure-u" id="nav">
+        <a href="#" class="nav-menu-button">Menu</a>
+    </div>
+
+    <div ng-controller="AllApp">
+
+
+    <div class="pure-u-1" id="list" ng-controller="ListCtrl">
+
+        <!--Start of line-->
+        <div class="email-item" ng-repeat="(i, method) in methods" id="method-list">
+
+            {{ method.name }}
+
+            <input
+                 type="text"
+                 class="method-input"
+                 id="input-{{method.method}}"
+                 ng-model="method.inputVal"
+                 ng-if="method.input" />
+
+            <input
+                type="text"
+                class="range-input"
+                id="range-input-01"
+                ng-model="method.inputVal1"
+                ng-if="method.range" />
+
+            <input
+                type="text"
+                class="range-input"
+                id="range-input-02"
+                ng-model="method.inputVal2"
+                ng-if="method.range" />
+
+            <button
+                    class="method-add-range"
+                    id="button-add-range"
+                    ng-if="method.range"
+                    ng-click="addRangeSection(method, method.inputVal1, method.inputVal2);">+</button>
+
+            <button
+                class="method-add"
+                id="button-add-{{method.method}}"
+                ng-if="!method.range"
+                ng-click="addSection(method, method.inputVal);">+</button>
+        </div>
+    </div>
+
+    <div class="pure-u-1" id="main" ng-controller="MainCtrl">
+        <div class="email-content">
+            <div class="email-content-body">
+
+                <button class="pure-button" ng-click="reset()" id="btn-reset">Reset</button>
+
+                <ul id="btn-container" ng-controller="DraggleCtrl" class="sortable grid">
+                    <li
+                        ng-repeat="section in regexSections | orderBy:section.sortOrder"
+                        on-finish-render="addSortable"
+                        data-id="{{section.$$hashKey}}"
+                        class="regex-btn">{{section.name}} <small class="section-param">{{ section.param }}</small>
+                        <button
+                            class="remove-btn pure-button pure-button-xsmall"
+                            ng-click="removeSection($index)"
+                                >x</button>
+                    </li>
+                </ul>
+
+                <div class="error">{{errorMessage}}</div>
+
+                <div class="regex">
+                    <pre><code id="regexCode">{{ regex }}</code></pre>
+                </div>
+
+                <h3>Use it in a test</h3>
+                <input
+                        type="text"
+                        id="input-test"
+                        ng-model="testString"
+                        ng-keyup="runTest(testString)"/>
+
+                <button id="btn-run-test" ng-click="runTest(testString)">Test</button>
+                Result: <span id="result-output">{{result}}</span>
+            </div>
+        </div>
+    </div>
+
+        <!--
+        <div id="repeater-container" ng-controller="MainCtrl">
+            <ul>
+                <li ng-repeat="field in fields" id="field-list">
+
+                    {{ field.name }}
+
+                    <input
+                            type="text"
+                            id="input-{{field.slug}}"
+                            ng-model="param"/>
+
+                    <button
+                            id="button-add-{{field.slug}}"
+                            ng-click="addField(field, param); param = '';">Add</button>
+
+                </li>
+            </ul>
+        </div>
+
+        <div ng-controller="OtherCtrl">
+            <div id="fields-output">{{fields}}</div>
+        </div> -->
+</div>
+<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="bower_components/lodash/lodash.js"></script>-->
+<!--<script src="bower_components/angular/angular.js"></script>-->
+<script type="text/javascript" src="bower_components/angular/angular.1.1.5.min.js"></script>
+<!-- build:js scripts/modules.js -->
+<!--<script src="bower_components/angular-resource/angular-resource.js"></script>-->
+<!--<script src="bower_components/angular-cookies/angular-cookies.js"></script>-->
+<!--<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>-->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="bower_components/html5sortable/jquery.sortable.js"></script>
+<script src="bower_components/verbalexpressions/VerbalExpressions.js"></script>
+<!--<script type="text/javascript" src="http://stevenlevithan.com/regex/colorizer/regex-colorizer.js"></script>-->
+<script src="scripts/app.js"></script>
+<script src="scripts/services/main.js"></script>
+<script src="scripts/services/methods.js"></script>
+<script src="scripts/controllers/listController.js"></script>
+<script src="scripts/controllers/mainController.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>
