@@ -1,6 +1,10 @@
 // Generated on 2013-08-13 using generator-angular 0.3.1
 'use strict';
-
+var LIVERELOAD_PORT = 35729;
+var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
 module.exports = function (grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -284,8 +288,8 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
-                autoWatch: true
+                configFile: 'karma-unit.conf.js',
+                autoWatch: false
             },
             e2e: {
                 configFile: 'karma-e2e.conf.js',
