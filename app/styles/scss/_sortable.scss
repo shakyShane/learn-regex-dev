@@ -1,7 +1,8 @@
 .sortable.grid {
   overflow: hidden;
   display: inline-block;
-  margin-left: 0;
+  margin: 0;
+  margin-top: $base-spacing*2;
   padding: 0;
 }
 
@@ -23,7 +24,9 @@
   padding-top: $base-spacing;
   text-align: left;
   margin-bottom: $base-spacing;
-  //width: 300px;
+  &:hover {
+    cursor: move;
+  }
   .section-param {
     display: block;
   }

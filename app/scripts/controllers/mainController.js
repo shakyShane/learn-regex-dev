@@ -1,4 +1,4 @@
-angular.module('ngRegexApp').controller('MainCtrl', function ($scope, $rootScope, MethodService, DataStore) {
+angular.module('ngRegexApp').controller('MainCtrl',['$scope', "MethodService", "DataStore", function ($scope, MethodService, DataStore) {
 
     // Add the data to the scope.
     $scope.data = DataStore; // Shared data
@@ -35,18 +35,19 @@ angular.module('ngRegexApp').controller('MainCtrl', function ($scope, $rootScope
 //            $scope.replaceResult = eval(replaceCode);
 //        }
 //    }
-});
+}]);
 
-angular.module('ngRegexApp').controller('DraggleCtrl', function ($scope, $rootScope, MethodService, DataStore) {
+angular.module('ngRegexApp').controller('DraggleCtrl', ['$scope', '$rootScope', 'MethodService', 'DataStore',  function ($scope, $rootScope, MethodService, DataStore) {
 
     $scope.data = DataStore;
+    var $sortable = jQuery(".sortable");
 
     var updateSortOrder = function () {
 
         $scope.$apply(function () {
             var order = [];
             $sortable.find('li').each(function (i, item) {
-                var order = $(this).data('id');
+                var order = jQuery(this).attr('rel');
                 angular.forEach($scope.data.regexSections, function (item) {
                     if (item.$$hashKey === order) {
                         item.sortOrder = i;
@@ -56,21 +57,21 @@ angular.module('ngRegexApp').controller('DraggleCtrl', function ($scope, $rootSc
 
             DataStore.js_code = MethodService.renderJsCode($scope.data.regexSections);
             DataStore.regex = MethodService.renderRegexCode($scope, DataStore.js_code);
+
             MethodService.runTest(DataStore, DataStore.testString);
         });
 
     };
 
-    var $sortable = $(".sortable");
     $scope.$on('addSortable', function () {
         $sortable.sortable('destroy');
         $sortable.off('sortupdate');
         $sortable.sortable().bind('sortupdate', updateSortOrder);
     });
-});
+}]);
 
 
-angular.module('ngRegexApp').directive('onFinishRender', function ($timeout) {
+angular.module('ngRegexApp').directive('onFinishRender', ['$timeout', function ($timeout) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
@@ -81,4 +82,4 @@ angular.module('ngRegexApp').directive('onFinishRender', function ($timeout) {
             }
         }
     }
-});
+}]);

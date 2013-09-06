@@ -4040,63 +4040,6 @@ a.pure-button-primary {
  * --------------------------
 */
 
-@media (max-width: 870px) {
-  /* Navigation Push Styles */
-
-  #layout {
-    position: relative;
-    padding-left: 0;
-  }
-
-  #layout.active {
-    position: relative;
-    left: 200px;
-  }
-
-  #layout.active #method-list {
-    left: 200px;
-    width: 200px;
-  }
-
-  #method-list {
-    left: 0;
-  }
-
-  .pure-menu-link {
-    position: fixed;
-    left: 0;
-    display: block;
-  }
-
-  #layout.active .pure-menu-link {
-    left: 200px;
-  }
-}
-
-@media (max-width: 767px) {
-  /* normalize paddings on small screens*/
-
-  .content {
-    width: 95%;
-    font-size: 90%;
-  }
-
-  .legal-links {
-    padding: 1em 0;
-  }
-
-  .legal-license,
-  .legal-copyright,
-  .legal-links,
-  .legal-links li {
-    text-align: center;
-  }
-
-  .l-hbox {
-    padding: 1.3em;
-  }
-}
-
 /**
  * Baby Blue theme for RainbowJS
  *
@@ -4383,7 +4326,8 @@ li.sortable-placeholder {
 .sortable.grid {
   overflow: hidden;
   display: inline-block;
-  margin-left: 0;
+  margin: 0;
+  margin-top: 1.2em;
   padding: 0;
 }
 
@@ -4419,6 +4363,10 @@ li.sortable-placeholder {
 
 .sortable li:after {
   clear: both;
+}
+
+.sortable li:hover {
+  cursor: move;
 }
 
 .sortable li .section-param {

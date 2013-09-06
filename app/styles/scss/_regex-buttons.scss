@@ -1,6 +1,7 @@
 li.sortable-placeholder {
   border: 1px dashed #CCC;
   background: none;
+
 }
 
 @keyframes button-enter {
@@ -12,6 +13,7 @@ li.sortable-placeholder {
   margin-right: 10px;
   animation-name: button-enter;
   animation-duration: .2s;
+
 }
 
 .regex-btn small {
