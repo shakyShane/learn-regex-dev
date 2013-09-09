@@ -3796,9 +3796,9 @@ aside a:visited {
 }
 
 /* --------------------------
-  * Content Module Styles
-  * --------------------------
- */
+ * Content Module Styles
+ * --------------------------
+*/
 
 /* The content div is placed as a wrapper around all the docs */
 
@@ -3887,7 +3887,7 @@ aside a:visited {
   /* so the menu or its navicon stays above all content */
   background: #191818;
   overflow-y: auto;
-  -webkit-overflow-scroll: touch;
+  overflow-scroll: touch;
 }
 
 #method-list a {
@@ -4040,11 +4040,59 @@ a.pure-button-primary {
  * --------------------------
 */
 
-/**
- * Baby Blue theme for RainbowJS
- *
- * @author tilomitra
- */
+@media (max-width: 870px) {
+  #method-list {
+    position: absolute;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-perspective: 200px;
+    -ms-perspective: 200px;
+    perspective: 200px;
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    z-index: 1000;
+    padding-right: 10px;
+  }
+
+  #method-list.active {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-box-shadow: 0px 0 10px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0 10px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  #layout {
+    padding-left: 0;
+  }
+
+  .menu-link.active {
+    -webkit-transform: translateX(200px);
+    -ms-transform: translateX(200px);
+    transform: translateX(200px);
+  }
+}
+
+@media (max-width: 400px) {
+  #method-list {
+    position: absolute;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-perspective: 200px;
+    -ms-perspective: 200px;
+    perspective: 200px;
+    -webkit-transform: translateX(-200%);
+    -ms-transform: translateX(-200%);
+    transform: translateX(-200%);
+  }
+
+  #method-list.active {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
 
 pre {
   word-wrap: break-word;
@@ -4133,6 +4181,34 @@ pre .support.value {
 pre {
   text-align: left;
   font-size: 12px;
+}
+
+.menu-link {
+  letter-spacing: normal;
+  background: #3b455f;
+  display: inline-block;
+  padding: 10px;
+  z-index: 1002;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -ms-transform 0.2s;
+  transition: transform 0.2s;
+  -webkit-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+.menu-link span[class^=icon] {
+  display: inline-block;
+  font-size: 1.3em;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+@media (min-width: 869px) {
+  .menu-link {
+    display: none;
+  }
 }
 
 .regex-section {

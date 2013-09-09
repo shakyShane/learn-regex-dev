@@ -21,13 +21,14 @@
 <body ng-app="ngRegexApp">
 
 <div class="pure-g-r" id="layout">
-    <a href="#menu" id="menuLink" class="pure-menu-link">
-        <span></span>
-    </a>
+
 
     <!-- AllApp -->
     <div ng-controller="AllApp">
 
+        <a href="#menu" class="menu-link" show-menu>
+            <span class="icon-menu-2"></span>
+        </a>
         <!-- Method-List -->
         <div class="pure-u" id="method-list" ng-controller="ListCtrl">
             <div class="pure-menu pure-menu-open">
@@ -193,6 +194,7 @@
 <script src="scripts/controllers/mainController.js"></script>
 <script src="scripts/filters/sortMethods.js"></script>
 <script src="scripts/directives/result-output.js"></script>
+<script src="scripts/directives/showMenu.js"></script>
 <!-- endbuild -->
 
 <script>

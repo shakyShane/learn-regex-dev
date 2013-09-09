@@ -6,3 +6,29 @@ pre {
   text-align: left;
   font-size: 12px;
 }
+
+.menu-link {
+
+  letter-spacing: normal;
+  background: $c-blue-1;
+  display: inline-block;
+  padding: 10px;
+  z-index: 1002;
+  transition: transform .2s;
+  span[class^=icon] {
+    display: inline-block;
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0;
+    color: white;
+  }
+  transform: translateX(0px);
+  &.active {
+    //transform: translateX(200px);
+  }
+}
+@media (min-width: 869px) {
+  .menu-link {
+    display: none;
+  }
+}
