@@ -32,3 +32,36 @@ pre {
     display: none;
   }
 }
+
+.hidden {
+  display: none;
+}
+
+.page-mask {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 100;
+  text-align: center;
+  padding-top: 50px;
+  .child {
+    margin: auto;
+  }
+}
+
+
+@keyframes spinner {
+  0% {transform: rotate(0)}
+  100% {transform: rotate(360deg)}
+}
+
+.rotate-always {
+  font-size: 3em;
+  color: $c-blue-1;
+  display: inline-block;
+  animation: spinner 2s infinite;
+}
