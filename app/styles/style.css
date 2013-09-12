@@ -4229,6 +4229,9 @@ pre {
   background: white;
   z-index: 100;
   text-align: center;
+}
+
+.no-flexbox .page-mask {
   padding-top: 50px;
 }
 

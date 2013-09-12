@@ -47,7 +47,9 @@ pre {
   background: white;
   z-index: 100;
   text-align: center;
-  padding-top: 50px;
+  .no-flexbox & {
+    padding-top: 50px;
+  }
   .child {
     margin: auto;
   }
