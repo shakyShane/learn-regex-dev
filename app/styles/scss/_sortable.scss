@@ -11,10 +11,8 @@
 .sortable li {
   @include clearfix;
   list-style: none;
-  //border: 1px solid #CCC;
   background: $c-blue-1;
   color: orange;
-  //color: #1C94C4;
   display: block;
   float: left;
   height: 40px;
@@ -26,12 +24,15 @@
   padding-top: $base-spacing;
   text-align: left;
   margin-bottom: $base-spacing;
+
   &:hover {
     cursor: move;
   }
+
   .section-param {
     display: block;
   }
+
   .remove-btn {
     color: white;
     position: absolute;
