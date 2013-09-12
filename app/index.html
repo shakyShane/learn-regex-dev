@@ -22,7 +22,6 @@
 
 <div class="pure-g-r" id="layout">
 
-
     <!-- AllApp -->
     <div ng-controller="AllApp">
 
@@ -30,7 +29,7 @@
             <span class="icon-menu-2"></span>
         </a>
         <!-- Method-List -->
-        <div class="pure-u" id="method-list" ng-controller="ListCtrl">
+        <div class="pure-u hidden" id="method-list" ng-controller="ListCtrl" show-on-load>
             <div class="pure-menu pure-menu-open">
 
                 <div class="regex-section">
@@ -179,7 +178,12 @@
         </div>
     </div>
 </div>
-
+<div class="page-mask" hide-on-load>
+    <div class="child">
+        <p>Please wait</p>
+        <span class="icon-spinner-2 rotate-always"></span>
+    </div>
+</div>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="bower_components/jquery/jquery.min.js"></script>
@@ -195,6 +199,7 @@
 <script src="scripts/filters/sortMethods.js"></script>
 <script src="scripts/directives/result-output.js"></script>
 <script src="scripts/directives/showMenu.js"></script>
+<script src="scripts/directives/show-hide-load.js"></script>
 <!-- endbuild -->
 
 <script>
