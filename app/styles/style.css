@@ -3885,9 +3885,11 @@ aside a:visited {
   bottom: 0;
   z-index: 1000;
   /* so the menu or its navicon stays above all content */
-  background: #191818;
+  background: #3b455f;
+  border-right: 1px solid black;
   overflow-y: auto;
   overflow-scroll: touch;
+  padding-right: 0.6em;
 }
 
 #method-list a {
@@ -4295,31 +4297,47 @@ pre {
   clear: both;
 }
 
+.regex-section .title {
+  color: white;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .regex-section__title {
-  color: orange;
+  color: black;
   margin-bottom: 0;
 }
 
 .regex-section__title p {
   margin: 0;
-  background: #3b455f;
+  background: #dedede;
   padding: 5px 5px;
   display: inline-block;
   font-size: 12px;
+  margin-left: 1px;
 }
 
 .regex-section__input {
   height: 40px;
   width: 80%;
-  background: #3b455f;
+  background: -webkit-linear-gradient(left, #475372, #475270);
+  background: linear-gradient(left, #475372, #475270);
   float: left;
   margin-bottom: 0.6em;
+  border: 1px solid #5f6872;
+  border-right: 0;
 }
 
 .regex-section__input input {
-  height: 40px;
+  height: 38px;
   padding-left: 0.6em;
   max-width: 100%;
+}
+
+.regex-section__input input {
+  outline: 0;
+  border: 0;
 }
 
 .regex-section__input.range input {
@@ -4336,14 +4354,16 @@ pre {
 .regex-section__input p {
   margin: 0;
   line-height: 40px;
-  color: orange;
+  color: #ffe76e;
   font-size: 12px;
   padding-left: 0.6em;
 }
 
 .regex-section__button {
   width: 20%;
-  background: #4c597b;
+  background: -webkit-linear-gradient(left, #485474, #475270);
+  background: linear-gradient(left, #485474, #475270);
+  border: 1px solid #5f6872;
   height: 40px;
   color: white;
   text-align: center;
@@ -4477,7 +4497,7 @@ li.sortable-placeholder {
   *zoom: 1;
   list-style: none;
   background: #3b455f;
-  color: orange;
+  color: #ffe76e;
   display: block;
   float: left;
   height: 40px;
@@ -4489,6 +4509,7 @@ li.sortable-placeholder {
   padding-top: 0.6em;
   text-align: left;
   margin-bottom: 0.6em;
+  border-radius: 5px;
 }
 
 .sortable li:before,
@@ -4505,6 +4526,7 @@ li.sortable-placeholder {
 
 .sortable li:hover {
   cursor: move;
+  background: #45516f;
 }
 
 .sortable li .section-param {
@@ -4522,6 +4544,8 @@ li.sortable-placeholder {
   right: 0;
   line-height: 40px;
   text-align: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .sortable li .remove-btn:hover {
