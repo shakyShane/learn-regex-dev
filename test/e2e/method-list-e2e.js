@@ -7,11 +7,11 @@ describe('Methods List E2E', function () {
     });
 
     it('should render all methods', function () {
-        expect(repeater('#method-list .regex-section').count()).toBe(11); // 10 methods + 1 heading
+        expect(repeater('#method-list .regex-section').count()).toBe(13); // 10 methods + 1 heading
     });
 
     it('should render input boxes for methods that require it', function () {
-        expect(repeater('#method-list .method-input').count()).toBe(3);
+        expect(repeater('#method-list .method-input').count()).toBe(4);
     });
 
     it("should render the range Div", function () {
@@ -23,7 +23,7 @@ describe('Methods List E2E', function () {
     });
 
     it("should render a button for each method", function () {
-        expect(repeater('#method-list .method-add').count()).toBe(9);
+        expect(repeater('#method-list .method-add').count()).toBe(11);
     });
 
 });

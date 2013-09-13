@@ -111,7 +111,7 @@ regexApp.factory('MethodService', function() {
             if (method.type == "modifier" || method.type == "single") {
 
                 if (method.name === "Space") {
-                    param = method.param = '"  "';
+                    param = method.param = '" "';
                 } else {
                     param = "";
                 }

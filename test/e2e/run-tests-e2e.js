@@ -99,11 +99,28 @@ describe('Methods List E2E', function () {
         fireInput(rangeInput2);
 
         element("#button-add-range").click();
+
         testInput.val("a");
         fireInput(testInput);
         testButton.click();
 
         expect(resultOutput.text()).toBe("false");
+    });
+
+    // Range - FALSE
+    it('should run a test using range and display the output (false)', function () {
+
+        var input = element("#input-anythingBut");
+        input.val("1");
+        fireInput(input);
+
+        element("#button-add-anythingBut").click();
+
+        testInput.val("a");
+        fireInput(testInput);
+        testButton.click();
+
+        expect(resultOutput.text()).toBe("true");
     });
 
 });

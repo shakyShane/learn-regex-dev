@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: Running tests', function () {
+describe('Method Service: When running tests', function () {
 
     // load the controller's module
     beforeEach(module('ngRegexApp'));
@@ -84,82 +84,203 @@ describe('Service: Running tests', function () {
         expect(test).toBe(true);
     });
 
-    // range
-    it("should run a test with the Range input using numbers", function () {
-        methodService.addSection(scope, methods._range, "0", "1");
-        var test = methodService.runTest(scope, "1");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "0");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "2");
-        expect(test).toBe(false);
+
+    describe("the 'range' section", function () {
+
+        describe("when using NUMBERS" , function () {
+
+            beforeEach(function(){
+                methodService.addSection(scope, methods._range, "0", "1");
+            });
+
+            it("should run a TRUE test", function () {
+                var test = methodService.runTest(scope, "1");
+                expect(test).toBe(true);
+            });
+
+            it("should run a FALSE test", function () {
+                var test = methodService.runTest(scope, "3");
+                expect(test).toBe(false);
+            });
+        });
+
+        describe("when using LETTERS" , function () {
+
+            var test;
+            beforeEach(function(){
+                methodService.addSection(scope, methods._range, "a", "d");
+            });
+
+            it("should run a TRUE test", function () {
+                test = methodService.runTest(scope, "a");
+                expect(test).toBe(true);
+            });
+
+            it("should run a FALSE test", function () {
+                test = methodService.runTest(scope, "e");
+                expect(test).toBe(false);
+            });
+        });
     });
 
     // range
-    it("should run a test with the Range input using letters", function () {
-        methodService.addSection(scope, methods._range, "a", "d");
-        var test = methodService.runTest(scope, "a");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "e");
-        expect(test).toBe(false);
+
+    describe("the 'or' section", function () {
+        var test;
+
+        beforeEach(function(){
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._or);
+            methodService.addSection(scope, methods._then, "b");
+        });
+
+        it("should run a TRUE test", function () {
+            test = methodService.runTest(scope, "a");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test", function () {
+            test = methodService.runTest(scope, "e");
+            expect(test).toBe(false);
+        });
+
     });
 
-    // Or
-    it("should run a test with the OR block", function () {
-        methodService.addSection(scope, methods._then, "a");
-        methodService.addSection(scope, methods._or);
-        methodService.addSection(scope, methods._then, "b");
-        var test = methodService.runTest(scope, "a");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "e");
-        expect(test).toBe(false);
+    describe("the 'anything' section", function () {
+
+        beforeEach(function () {
+            methodService.addSection(scope, methods._anything);
+        });
+
+        it("should always return TRUE if a param is provided", function () {
+            var test = methodService.runTest(scope, "1");
+            expect(test).toBe(true);
+            test = methodService.runTest(scope, "0");
+            expect(test).toBe(true);
+            test = methodService.runTest(scope, "07899rfwerqnweflkjqnef");
+            expect(test).toBe(true);
+        });
+
+        it("should always return false if nothing is provided for the test", function () {
+            methodService.addSection(scope, methods._anything);
+            var test = methodService.runTest(scope, "");
+            expect(test).toBe(false);
+        });
     });
 
-    // Anything
-    it("should always return true for the ANYTHING block", function () {
-        methodService.addSection(scope, methods._anything);
-        var test = methodService.runTest(scope, "1");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "0");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "07899rfwerqnweflkjqnef");
-        expect(test).toBe(true);
+    describe("the 'anything' section Wedged in the middle", function () {
+
+        var test;
+
+        beforeEach(function () {
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._anything);
+            methodService.addSection(scope, methods._then, "b");
+        });
+
+        it("should run a FALSE test", function () {
+            test = methodService.runTest(scope, "a");
+            expect(test).toBe(false);
+        });
+
+        it("should run a TRUE test", function () {
+            test = methodService.runTest(scope, "aanythingthiasb");
+            expect(test).toBe(true);
+        });
     });
 
-    it("should always return false if nothing is provided for the test & the anything block is used", function () {
-        methodService.addSection(scope, methods._anything);
-        var test = methodService.runTest(scope, "");
-        expect(test).toBe(false);
+    describe("the 'Word' section", function () {
+
+        beforeEach(function () {
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._word);
+            methodService.addSection(scope, methods._then, "b");
+        });
+
+        it("should run a TRUE test", function () {
+            var test = methodService.runTest(scope, "a9b");
+            expect(test).toBe(true);
+        });
+
+        it("should run a FALSE (1)", function () {
+            var test = methodService.runTest(scope, "ab");
+            expect(test).toBe(false);
+        });
+
+        it("should run a FALSE (2)", function () {
+            var test = methodService.runTest(scope, "a-b");
+            expect(test).toBe(false);
+        });
+        it("should run a FALSE (3)", function () {
+            var test = methodService.runTest(scope, "a[b");
+            expect(test).toBe(false);
+        });
+
     });
 
-    it("should run a test with the ANYTHING block stuck anywhere", function () {
-        methodService.addSection(scope, methods._then, "a");
-        methodService.addSection(scope, methods._anything);
-        methodService.addSection(scope, methods._then, "b");
+    describe("the Anything But section", function () {
 
-        var test = methodService.runTest(scope, "a");
-        expect(test).toBe(false);
+        it("should run a TRUE test", function () {
+            methodService.addSection(scope, methods._anythingBut, "a");
+            var test = methodService.runTest(scope, "ab");
+            expect(test).toBe(true);
+        });
 
-        test = methodService.runTest(scope, "aanythingthiasb");
-        expect(test).toBe(true);
+        it("should run a TRUE test when wedged in between others", function () {
+
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._anythingBut, "b");
+            methodService.addSection(scope, methods._then, "c");
+            var test = methodService.runTest(scope, "auc");
+            expect(test).toBe(true);
+        });
+
+        it("should run a FALSE", function () {
+            methodService.addSection(scope, methods._anythingBut, "a");
+            var test = methodService.runTest(scope, "a");
+            expect(test).toBe(false);
+        });
+
+        it("should run a FALSE test when wedged in between others", function () {
+
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._anythingBut, "b");
+            methodService.addSection(scope, methods._then, "c");
+            var test = methodService.runTest(scope, "abc");
+            expect(test).toBe(false);
+        });
     });
 
-    //Word
-    it("should run tests when the WORD block is used", function () {
-        methodService.addSection(scope, methods._then, "a");
-        methodService.addSection(scope, methods._word);
-        methodService.addSection(scope, methods._then, "b");
+    describe("the SPACE section", function () {
 
-        var test = methodService.runTest(scope, "ab");
-        expect(test).toBe(false);
+        it("should run a TRUE test", function () {
 
-        test = methodService.runTest(scope, "a9b");
-        expect(test).toBe(true);
+            methodService.addSection(scope, methods._space);
+            var test = methodService.runTest(scope, " ");
+            expect(test).toBe(true);
+        });
 
-        test = methodService.runTest(scope, "a-b");
-        expect(test).toBe(false);
+        it("should run a FALSE test", function () {
 
-        test = methodService.runTest(scope, "a]b");
-        expect(test).toBe(false);
+            methodService.addSection(scope, methods._space);
+            var test = methodService.runTest(scope, "rwthwrt");
+            expect(test).toBe(false);
+        });
+
+        it("should run a TRUE test wedged in the middle", function () {
+
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._space);
+            methodService.addSection(scope, methods._then, "b");
+            var test = methodService.runTest(scope, "a b");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test wedged in the middle", function () {
+
+            methodService.addSection(scope, methods._then, "a");
+            methodService.addSection(scope, methods._space);
+            methodService.addSection(scope, methods._then, "b");
+            var test = methodService.runTest(scope, "a'b");
+            expect(test).toBe(false);
+        });
     });
 });
