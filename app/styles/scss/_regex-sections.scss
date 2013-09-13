@@ -1,69 +1,99 @@
 .regex-section {
+
   @include clearfix();
   padding-left: $base-spacing;
   font-family: Consolas, 'Liberation Mono', Courier, monospace;
+
+  .title {
+
+    color: white;
+    font-family: $base-font;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 }
 
 .regex-section__title {
-  color: orange;
-  //background: rgb(43, 51, 70);
+
+  color: black;
   margin-bottom: 0;
-  //padding: $base-spacing;
+
   p {
+
     margin: 0;
-    background: rgb(59, 69, 95);
+    background: #dedede;
     padding: 5px 5px;
     display: inline-block;
     font-size: 12px;
+    margin-left: 1px;
   }
 }
 
 .regex-section__input {
+
   input {
-    height: 40px;
+
+    height: 38px;
     padding-left: $base-spacing;
     max-width: 100%;
   }
-  &.range {
+
+  input {
+
+    outline: 0;
+    border: 0;
+    //box-shadow: 0 0 1px 1px #c7c7c7 inset;
+  }
+    &.range {
+
     input {
+
       outline: 0;
       border: 0;
       width: 50%;
       float: left;
+
       &:first-child {
         border-right: 2px solid rgb(59, 69, 95);
       }
     }
   }
   p {
+
     margin: 0;
     line-height: 40px;
-    color: orange;
+    color: #ffe76e;
     font-size: 12px;
     padding-left: $base-spacing;
   }
+
   height: 40px;
   width: 80%;
-  background: rgb(59, 69, 95);
+  background: linear-gradient(left, rgb(71, 83, 114), rgb(71, 82, 112));
   float: left;
   margin-bottom: $base-spacing;
+  border: 1px solid rgb(95, 104, 114);
+  border-right: 0;
 }
 
 .regex-section__button {
+
   width: 20%;
-  background: rgb(76, 89, 123);
+  background: linear-gradient(left, rgb(72, 84, 116), rgb(71, 82, 112));
+  border: 1px solid rgb(95, 104, 114);
   height: 40px;
   color: white;
-  //text-shadow: 1px 1px 1px black;
   text-align: center;
   line-height: 42px;
   float: right;
   transition: all .1s;
   perspective: 600px;
+
   span {
     display: inline-block;
     transition: all .4s;
   }
+
   &:hover {
 
     cursor: pointer;
@@ -74,8 +104,10 @@
     }
   }
   &:active {
+
     box-shadow: inset 3px 0px 2px 0px black;
     span {
+
       color: white;
       text-shadow: 1px 1px 1px #26475c;
     }

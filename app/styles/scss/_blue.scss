@@ -199,9 +199,11 @@ aside a, aside a:visited {
   left: 200px;
   bottom: 0;
   z-index: 1000; /* so the menu or its navicon stays above all content */
-  background: #191818;
+  background: $c-blue-1;
+  border-right: 1px solid black;
   overflow-y: auto;
   overflow-scroll: touch;
+  padding-right: $base-spacing;
 }
 
 #method-list a {
