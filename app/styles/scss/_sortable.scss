@@ -12,7 +12,7 @@
   @include clearfix;
   list-style: none;
   background: $c-blue-1;
-  color: orange;
+  color: #ffe76e;
   display: block;
   float: left;
   height: 40px;
@@ -24,9 +24,11 @@
   padding-top: $base-spacing;
   text-align: left;
   margin-bottom: $base-spacing;
+  border-radius: 5px;
 
   &:hover {
     cursor: move;
+    background: lighten($c-blue-1, 5%);
   }
 
   .section-param {
@@ -44,6 +46,8 @@
     right: 0;
     line-height: 40px;
     text-align: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     &:hover {
       cursor: pointer;
       background: $c-blue-1;
