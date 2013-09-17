@@ -14,10 +14,10 @@ describe('Service: Methods', function () {
         methods = Methods;
     }));
 
-    it('Returns an array of objects', function () {
+//    it('Returns an array of objects', function () {
 //        expect(methods.length).toBeDefined();
 //        expect(typeof methods[0] === "object").toBeTruthy();
 //        expect(typeof methods[0].name).toBeDefined();
-    });
+//    });
 
 });

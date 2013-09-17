@@ -14,43 +14,43 @@ describe("Controller: Run tests through MainCtrl", function () {
         });
     }));
 
-    it('should run a test', function () {
-        methodService.addSection(dataStore, methods._then, "shane");
-        var testResult = scope.runTest("shane");
-        expect(testResult).toBe(true);
+    describe("running simple tests", function () {
+
+        it('should test a TRUE section', function () {
+            methodService.addSection(dataStore, methods._then, "shane");
+            var testResult = scope.runTest("shane");
+            expect(testResult).toBe(true);
+        });
+
+        it('should run a FALSE test', function () {
+            methodService.addSection(dataStore, methods._startOfLine, "");
+            methodService.addSection(dataStore, methods._then, "shane");
+            var testResult = scope.runTest("dshane");
+            expect(testResult).toBe(false);
+        });
+
     });
 
-    it('should run a test', function () {
-        methodService.addSection(dataStore, methods._startOfLine, "");
-        methodService.addSection(dataStore, methods._then, "shane");
-        var testResult = scope.runTest("dshane");
-        expect(testResult).toBe(false);
-    });
+    describe("running tests with quotes", function () {
 
+        it('should run a test including a double quote', function () {
+            methodService.addSection(dataStore, methods._startOfLine, '');
+            methodService.addSection(dataStore, methods._then, '"');
+            var testResult = scope.runTest('"');
+            expect(testResult).toBe(true);
+        });
 
-    /**
-     *
-     *
-     * Double Quote stuff
-     *
-     *
-     */
-    it('should run a test including a double quote', function () {
-        methodService.addSection(dataStore, methods._startOfLine, '');
-        methodService.addSection(dataStore, methods._then, '"');
-        var testResult = scope.runTest('"');
-        expect(testResult).toBe(true);
-    });
+        it('should run a test including a double quote after something else', function () {
+            methodService.addSection(dataStore, methods._then, 'shane');
+            methodService.addSection(dataStore, methods._then, '"');
+            var testResult = scope.runTest('shane"');
+            expect(testResult).toBe(true);
+        });
 
-    it('should run a test including a double quote after something else', function () {
-        methodService.addSection(dataStore, methods._then, 'shane');
-        methodService.addSection(dataStore, methods._then, '"');
-        var testResult = scope.runTest('shane"');
-        expect(testResult).toBe(true);
-    });
-    it('should run a test including a double quote in the middle of a string', function () {
-        methodService.addSection(dataStore, methods._then, 'shane"ohno');
-        var testResult = scope.runTest('shane"ohno');
-        expect(testResult).toBe(true);
+        it('should run a test including a double quote in the middle of a string', function () {
+            methodService.addSection(dataStore, methods._then, 'shane"ohno');
+            var testResult = scope.runTest('shane"ohno');
+            expect(testResult).toBe(true);
+        });
     });
 });

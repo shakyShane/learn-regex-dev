@@ -123,4 +123,29 @@ describe('Methods List E2E', function () {
         expect(resultOutput.text()).toBe("true");
     });
 
+    describe("running tests with spaces in the regex", function () {
+        it("should run a TRUE test", function () {
+            thenInput.val(" a");
+            fireInput(thenInput);
+            element("#button-add-then").click();
+
+            testInput.val(" a");
+            fireInput(testInput);
+            testButton.click();
+
+            expect(resultOutput.text()).toBe("true");
+        });
+        it("should run a FALSE test", function () {
+            thenInput.val(" ");
+            fireInput(thenInput);
+            element("#button-add-then").click();
+
+            testInput.val("g");
+            fireInput(testInput);
+            testButton.click();
+
+            expect(resultOutput.text()).toBe("false");
+        });
+    });
+
 });

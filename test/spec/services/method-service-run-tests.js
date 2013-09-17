@@ -18,71 +18,117 @@ describe('Method Service: When running tests', function () {
         scope.regexSections = [];
     }));
 
-    // Start of string
-    it("should run a test with start of String", function () {
-        methodService.addSection(scope, methods._then, "shane");
-        methodService.addSection(scope, methods._startOfLine, "");
-        var test = methodService.runTest(scope, "shane");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "dshane");
-        expect(test).toBe(false);
+    describe("using modifiers", function () {
+
+        var test;
+
+        beforeEach(function(){
+            methodService.addSection(scope, methods._then, "shane");
+        });
+
+        it("should run a TRUE test with start of String", function () {
+            methodService.addSection(scope, methods._startOfLine, "");
+            test = methodService.runTest(scope, "shane");
+            expect(test).toBe(true);
+        });
+
+        it("should run a FALSE test with start of String", function () {
+            methodService.addSection(scope, methods._startOfLine, "");
+            test = methodService.runTest(scope, "dshane");
+            expect(test).toBe(false);
+        });
+
+        // End of string
+        it("should run a TRUE test with End of a string", function () {
+            methodService.addSection(scope, methods._endOfLine, "");
+            test = methodService.runTest(scope, "ranomc./wdshane");
+            expect(test).toBe(true);
+        });
+
+        it("should run a FALSE test with End of a string", function () {
+            methodService.addSection(scope, methods._endOfLine, "");
+            test = methodService.runTest(scope, "ranshaneomc./wd");
+            expect(test).toBe(false);
+        });
+
+        it("should run a TRUE test with 'withAnyCase'", function () {
+            methodService.addSection(scope, methods._withAnyCase, "");
+            test = methodService.runTest(scope, "SHANE");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test with 'withAnyCase'", function () {
+            test = methodService.runTest(scope, "SHANE");
+            expect(test).toBe(false);
+        });
+
     });
 
-    // End of string
-    it("should run a test with End of a string", function () {
-        methodService.addSection(scope, methods._then, "shane");
-        methodService.addSection(scope, methods._endOfLine, "");
-        var test = methodService.runTest(scope, "ranomc./wdshane");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "ranshaneomc./wd");
-        expect(test).toBe(false);
+    describe("using THEN", function () {
+
+        var test;
+        it("should run a TRUE test", function () {
+            methodService.addSection(scope, methods._then, "shane");
+            test = methodService.runTest(scope, "shane");
+            expect(test).toBe(true);
+        });
+
+        it("should run a TRUE test with multiple blocks", function () {
+            methodService.addSection(scope, methods._then, "shane ");
+            methodService.addSection(scope, methods._then, "is ");
+            methodService.addSection(scope, methods._then, "awesome");
+            test = methodService.runTest(scope, "shane is awesome");
+            expect(test).toBe(true);
+        });
+
     });
 
-    // With any case
-    it("should run a test with End of a string", function () {
-        methodService.addSection(scope, methods._then, "shane");
-        var test = methodService.runTest(scope, "SHANE");
-        expect(test).toBe(false);
+    describe("using MAYBE", function () {
 
-        methodService.addSection(scope, methods._withAnyCase, "");
-        test = methodService.runTest(scope, "SHANE");
-        expect(test).toBe(true);
-    });
+        var test;
+        beforeEach(function(){
+            methodService.addSection(scope, methods._then, "http");
+            methodService.addSection(scope, methods._maybe, "s");
+            methodService.addSection(scope, methods._then, "://");
+        });
 
-    // then
-    it("should run a test with multiple THEN blocks", function () {
-        methodService.addSection(scope, methods._then, "shane ");
-        methodService.addSection(scope, methods._then, "is ");
-        methodService.addSection(scope, methods._then, "awesome");
-        var test = methodService.runTest(scope, "shane is awesome");
-        expect(test).toBe(true);
-    });
-
-    // maybe
-    it("should run a test with MAYBE stuck inbetween other things", function () {
-        methodService.addSection(scope, methods._then, "http");
-        methodService.addSection(scope, methods._maybe, "s");
-        methodService.addSection(scope, methods._then, "://");
-        var test = methodService.runTest(scope, "https://github.com/timdouglas/grunt-cache-breaker");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "http://github.com/timdouglas/grunt-cache-breaker");
-        expect(test).toBe(true);
-        test = methodService.runTest(scope, "ftp://github.com/timdouglas/grunt-cache-breaker");
-        expect(test).toBe(false);
+        it("should run a TRUE test (1)", function () {
+            test = methodService.runTest(scope, "https://github.com/timdouglas/grunt-cache-breaker");
+            expect(test).toBe(true);
+        });
+        it("should run a TRUE test (2)", function () {
+            test = methodService.runTest(scope, "https://github.com/timdouglas/grunt-cache-breaker");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test", function () {
+            test = methodService.runTest(scope, "ftp://github.com/timdouglas/grunt-cache-breaker");
+            expect(test).toBe(false);
+        });
     });
 
 
-    // any of
-    it("should run a test with multiple THEN blocks", function () {
-        methodService.addSection(scope, methods._then, "shane");
-        methodService.addSection(scope, methods._anyOf, " -");
-        methodService.addSection(scope, methods._then, "osbourne");
-        var test = methodService.runTest(scope, "Shane Osbourne");
-        expect(test).toBe(false);
-        methodService.addSection(scope, methods._withAnyCase);
-        test = methodService.runTest(scope, "Shane Osbourne");
-        expect(test).toBe(true);
+    describe("using ANYOF", function () {
+
+        var test;
+        beforeEach(function(){
+            methodService.addSection(scope, methods._then, "shane");
+            methodService.addSection(scope, methods._anyOf, " -");
+            methodService.addSection(scope, methods._then, "osbourne");
+        });
+
+        it("should run a TRUE test (1)", function () {
+            test = methodService.runTest(scope, "shane osbourne");
+            expect(test).toBe(true);
+        });
+        it("should run a TRUE test (2)", function () {
+            test = methodService.runTest(scope, "shane-osbourne");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test", function () {
+            test = methodService.runTest(scope, "shaneosbourne");
+            expect(test).toBe(false);
+        });
     });
+
 
 
     describe("the 'range' section", function () {
@@ -280,6 +326,19 @@ describe('Method Service: When running tests', function () {
             methodService.addSection(scope, methods._space);
             methodService.addSection(scope, methods._then, "b");
             var test = methodService.runTest(scope, "a'b");
+            expect(test).toBe(false);
+        });
+
+        it("should run a TRUE test with a space at the start of the input", function () {
+            methodService.addSection(scope, methods._space);
+            methodService.addSection(scope, methods._then, "b");
+            var test = methodService.runTest(scope, " b");
+            expect(test).toBe(true);
+        });
+        it("should run a FALSE test with a space at the start of the input", function () {
+            methodService.addSection(scope, methods._space);
+            methodService.addSection(scope, methods._then, "b");
+            var test = methodService.runTest(scope, "b ");
             expect(test).toBe(false);
         });
     });

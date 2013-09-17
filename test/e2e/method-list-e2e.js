@@ -7,7 +7,7 @@ describe('Methods List E2E', function () {
     });
 
     it('should render all methods', function () {
-        expect(repeater('#method-list .regex-section').count()).toBe(13); // 10 methods + 1 heading
+        expect(repeater('#method-list .regex-section').count()).toBe(13); // 12 methods + 1 heading
     });
 
     it('should render input boxes for methods that require it', function () {

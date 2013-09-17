@@ -45,6 +45,7 @@ describe("Controller: MainCtrl", function () {
         methodService.addSection(dataStore, methods._then, "shane");
 
         var localScope = scope.removeSection(0);
+        var localScope = scope.removeSection(0);
 
         expect(localScope.regexSections.length).toBe(0);
         expect(localScope.regex).toBe('var tester = new RegExp();');

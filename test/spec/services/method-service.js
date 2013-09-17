@@ -151,13 +151,13 @@ describe('Service: Methods functionality', function () {
             expect(scope.data.regexSections.length).toBe(0);
             expect(scope.data.js_code).toBe("VerEx()");
             expect(scope.data.regex).toBe('var tester = new RegExp();');
-            expect(scope.data.errorMessage).toBeDefined();
+            expect(scope.data.errorMessage.length > 0).toBeTruthy();
         });
 
         it('should wipe the error message after a new section was successfully added', function () {
 
             methodService.addSection(dataStore, scope.methods._range, "1", "0"); // bad
-            expect(scope.data.errorMessage).toBeDefined();
+            expect(scope.data.errorMessage.length > 0).toBeTruthy();
 
             methodService.addSection(dataStore, scope.methods._range, "0", "1"); // good
             expect(scope.data.regexSections.length).toBe(1);
@@ -193,57 +193,45 @@ describe('Service: Methods functionality', function () {
     });
 
 
-    //
-    //
-    // TESTER JS CODE
-    //
-    //
-    it('should update the test code when the test string is updated (1)', function () {
-        methodService.addTestString(dataStore, "shane");
-        expect(dataStore.regexTestCode).toBe('tester.test("shane");');
+    describe("when setting the tester code", function () {
+
+        it('should update the test code (1)', function () {
+            methodService.addTestString(dataStore, "shane");
+            expect(dataStore.regexTestCode).toBe('tester.test("shane");');
+        });
+
+        it('should update the test code (2)', function () {
+            methodService.addTestString(dataStore, '"shane"');
+            expect(dataStore.regexTestCode).toBe('tester.test("\\"shane\\"");');
+        });
     });
 
-    it('should update the test code when the test string is updated (2)', function () {
-        methodService.addTestString(dataStore, '"shane"');
-        expect(dataStore.regexTestCode).toBe('tester.test("\\"shane\\"");');
-    });
+    describe("when dealing with characters that need escaping", function () {
 
-    /**
-     *
-     * Escaped Characters
-     *
-     */
-    it('should accept a single double quote and return it escaped', function () {
-        var output = methodService.escapeQuotes('"');
-        expect(output).toBe('\\"');
-    });
+        it('should accept a single double quote and return it escaped', function () {
+            var output = methodService.escapeQuotes('"');
+            expect(output).toBe('\\"');
+        });
 
-    it('should accept mulitple single double quotes and return them escaped', function () {
-        var output = methodService.escapeQuotes('"""');
-        expect(output).toBe('\\"\\"\\"');
-    });
+        it('should accept mulitple single double quotes and return them all escaped', function () {
+            var output = methodService.escapeQuotes('"""');
+            expect(output).toBe('\\"\\"\\"');
+        });
 
-    it('should accept double in the middle of a stirng', function () {
-        var output = methodService.escapeQuotes('shane"kittie');
-        expect(output).toBe('shane\\"kittie');
-    });
+        it('should accept double quotes in the middle of a stirng', function () {
+            var output = methodService.escapeQuotes('shane"kittie');
+            expect(output).toBe('shane\\"kittie');
+        });
 
-    it('should accept double quotes next to single quotes', function () {
-        var output = methodService.escapeQuotes('"\'');
-        expect(output).toBe('\\"\'');
-    });
+        it('should accept double quotes next to single quotes', function () {
+            var output = methodService.escapeQuotes('"\'');
+            expect(output).toBe('\\"\'');
+        });
 
-    it('should correctly test for multiple double quotes', function () {
-        methodService.addSection(dataStore, scope.methods._then, '""'); // Double Quotes
-        expect(scope.data.regexSections.length).toBe(1);
-        expect(scope.data.regex).toBe('var tester = new RegExp("(?:\\"\\")", "gm");');
+        it('should correctly test for multiple double quotes', function () {
+            methodService.addSection(dataStore, scope.methods._then, '""'); // Double Quotes
+            expect(scope.data.regexSections.length).toBe(1);
+            expect(scope.data.regex).toBe('var tester = new RegExp("(?:\\"\\")", "gm");');
+        });
     });
-
-//    it("", function () {
-//        methodService.addSection(dataStore, scope.methods._range, "1", "0");
-//        expect(scope.data.regexSections.length).toBe(0);
-//        expect(scope.data.js_code).toBe("VerEx()");
-//        expect(scope.data.regex).toBe('var tester = new RegExp();');
-//        expect(scope.data.errorMessage).toBeDefined();
-//    });
 });
