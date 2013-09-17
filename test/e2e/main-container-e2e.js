@@ -37,7 +37,7 @@ describe('Methods List E2E', function () {
         expect(this.regexCode.text()).toBe("var tester = new RegExp();");
     });
 
-    describe("", function () {
+    describe("Working with start modifiers", function () {
 
         it('should update the on-screen regex when a button is clicked (adding one)', function () {
 
