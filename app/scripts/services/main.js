@@ -95,7 +95,7 @@ regexApp.factory('MethodService', function() {
             // remove a section
             var removedSection = this.removeSectionByHash(scope, lastAdded);
             if (removedSection) {
-                scope.errorMessage = "There were problems, yo! It was the last one you added: " + removedSection.method;
+                scope.errorMessage = removedSection.errorMsg;
             }
         },
         addRegexSection: function (scope, lastAdded) {
