@@ -50,6 +50,7 @@
                                     id="input-{{method.method}}"
                                     ng-model="method.inputVal"
                                     placeholder="..."
+                                    ng-trim='false'
                                     ng-if="method.input"/>
                         </form>
 
@@ -61,6 +62,7 @@
                                     id="range-input-01"
                                     ng-model="method.inputVal1"
                                     placeholder="..."
+                                    ng-trim='false'
                                     ng-if="method.range"/>
 
                             <input
@@ -68,6 +70,7 @@
                                     class="range-input"
                                     id="range-input-02"
                                     placeholder="..."
+                                    ng-trim='false'
                                     ng-model="method.inputVal2"
                                     ng-if="method.range"/>
                         </form>
@@ -121,7 +124,7 @@
                     </li>
                 </ul>
 
-                <div class="error">{{data.errorMessage}}</div>
+                <div class="error" id="errorText" ng-if="data.errorMessage">{{data.errorMessage}} <span ng-click="data.errorMessage = ''" id="errorClose" class="error__close icon-close"></span></div>
 
                 <div class="intro" id="intro" ng-show="!data.regexSections.length">
                     <p class="intro__arrow"><span class="icon-arrow-left"></span></p>
@@ -146,6 +149,7 @@
                             type="text"
                             id="input-test"
                             ng-model="data.testString"
+                            ng-trim='false'
                             ng-keyup="runTest(data.testString)"/>
 
                 <p> <span>Result: <span id="result-output">{{data.result}}</span> <span result-output id="result-output-icon"></span></span></p>
