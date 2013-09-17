@@ -37,15 +37,19 @@ describe('Methods List E2E', function () {
         expect(this.regexCode.text()).toBe("var tester = new RegExp();");
     });
 
-    it('should update the on-screen regex when a button is clicked (adding one)', function () {
+    describe("", function () {
 
-        var regexCode = element("#regexCode");
-        element("#button-add-startOfLine").click();
+        it('should update the on-screen regex when a button is clicked (adding one)', function () {
 
-        expect(this.regexCode.text()).toBe('var tester = new RegExp("^", "gm");');
+            var regexCode = element("#regexCode");
+            element("#button-add-startOfLine").click();
 
-        element("#button-add-withAnyCase").click();
-        expect(this.regexCode.text()).toBe('var tester = new RegExp("^", "gim");');
+            expect(this.regexCode.text()).toBe('var tester = new RegExp("^", "gm");');
+
+            element("#button-add-withAnyCase").click();
+            expect(this.regexCode.text()).toBe('var tester = new RegExp("^", "gim");');
+
+        });
 
     });
 //
@@ -192,6 +196,7 @@ describe('Methods List E2E', function () {
             it("should not be visible when there is nothing to test (ie, not sectioned added yet.)", function () {
                 expect(testContainer.count()).toBe(0);
             });
+
             it("should be visible when a section is added", function () {
                 thenInput.val("shane");
                 fireInput(thenInput);
@@ -205,6 +210,30 @@ describe('Methods List E2E', function () {
                 resetBtn.click();
                 expect(testContainer.count()).toBe(0);
             });
+        });
+
+         describe("the error message", function () {
+
+            var errorText;
+
+            beforeEach(function () {
+                rangeInput1.val(1);
+                rangeInput2.val(0);
+                fireInput(rangeInput1);
+                fireInput(rangeInput2);
+                element("#button-add-range").click();
+                errorText = element("#errorText");
+            });
+
+            it("should display when an error occured", function () {
+                expect(errorText.text()).toBe("You can't do that with the Range input. ");
+            });
+
+            it("should remove the error when the close button is clicked", function () {
+                element("#errorClose").click();
+                expect(errorText.count()).toBe(0);
+            });
+
         });
 
 //    describe("the shorthand Regex section", function () {
