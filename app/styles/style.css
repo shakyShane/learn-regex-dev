@@ -2299,6 +2299,44 @@ you can use the generic selector below, but it's slower:
   box-sizing: border-box;
 }
 
+.error {
+  position: relative;
+  background: #262c3d;
+  color: white;
+  padding: 0.6em;
+  border-radius: 2px;
+  margin-bottom: 0.6em;
+  /**
+   * For IE 6/7 only
+   * Include this rule to trigger hasLayout and contain floats.
+   */
+  *zoom: 1;
+}
+
+.error:before,
+.error:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.error:after {
+  clear: both;
+}
+
+.error__close {
+  display: inline-block;
+  float: right;
+  right: 0.6em;
+  padding: 5px;
+  background: red;
+}
+
+.error__close:hover {
+  cursor: pointer;
+}
+
 /*!
 Pure v0.2.1
 Copyright 2013 Yahoo! Inc. All rights reserved.
@@ -4319,7 +4357,7 @@ pre {
 }
 
 .regex-section__input {
-  height: 40px;
+  height: 30px;
   width: 80%;
   background: -webkit-linear-gradient(left, #475372, #475270);
   background: linear-gradient(left, #475372, #475270);
@@ -4330,12 +4368,9 @@ pre {
 }
 
 .regex-section__input input {
-  height: 38px;
+  height: 28px;
   padding-left: 0.6em;
   max-width: 100%;
-}
-
-.regex-section__input input {
   outline: 0;
   border: 0;
 }
@@ -4353,7 +4388,7 @@ pre {
 
 .regex-section__input p {
   margin: 0;
-  line-height: 40px;
+  line-height: 28px;
   color: #ffe76e;
   font-size: 12px;
   padding-left: 0.6em;
@@ -4364,10 +4399,10 @@ pre {
   background: -webkit-linear-gradient(left, #485474, #475270);
   background: linear-gradient(left, #485474, #475270);
   border: 1px solid #5f6872;
-  height: 40px;
+  height: 30px;
   color: white;
   text-align: center;
-  line-height: 42px;
+  line-height: 30px;
   float: right;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
