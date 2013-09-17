@@ -1,3 +1,5 @@
+$section-height: 28px;
+
 .regex-section {
 
   @include clearfix();
@@ -33,17 +35,13 @@
 
   input {
 
-    height: 38px;
+    height: $section-height;
     padding-left: $base-spacing;
     max-width: 100%;
-  }
-
-  input {
-
     outline: 0;
     border: 0;
-    //box-shadow: 0 0 1px 1px #c7c7c7 inset;
   }
+
     &.range {
 
     input {
@@ -61,13 +59,13 @@
   p {
 
     margin: 0;
-    line-height: 40px;
+    line-height: $section-height;
     color: #ffe76e;
     font-size: 12px;
     padding-left: $base-spacing;
   }
 
-  height: 40px;
+  height: $section-height + 2;
   width: 80%;
   background: linear-gradient(left, rgb(71, 83, 114), rgb(71, 82, 112));
   float: left;
@@ -81,10 +79,10 @@
   width: 20%;
   background: linear-gradient(left, rgb(72, 84, 116), rgb(71, 82, 112));
   border: 1px solid rgb(95, 104, 114);
-  height: 40px;
+  height: 30px;
   color: white;
   text-align: center;
-  line-height: 42px;
+  line-height: $section-height + 2;
   float: right;
   transition: all .1s;
   perspective: 600px;

@@ -23,3 +23,24 @@
 
     *zoom: 1;
 }
+
+.error {
+  position: relative;
+  background: #262c3d;
+  color: white;
+  padding: $base-spacing;
+  border-radius: 2px;
+  margin-bottom: $base-spacing;
+  @include clearfix;
+}
+
+.error__close {
+  display: inline-block;
+  float: right;
+  right: $base-spacing;
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+  background: red;
+}
