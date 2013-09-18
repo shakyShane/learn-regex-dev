@@ -158,8 +158,22 @@ regexApp.factory('MethodService', function() {
 
             return '.' + method + '('+ param +')';
         },
-        runTest: function (scope, testString) {
+        extractOrderFromDom: function (elems, scope) {
+            var newOrder = [];
+            elems.each(function (i) {
+                var order = jQuery(this).attr('rel');
 
+                angular.forEach(scope.regexSections, function (item, ii) {
+
+                    if (item.$$hashKey === order) {
+                        item.sortOrder = i;
+                        newOrder.push(ii);
+                    }
+                });
+            });
+            return newOrder;
+        },
+        runTest: function (scope, testString) {
             var cleanTestString = this.escapeQuotes(testString);
 
             if (!testString || testString === "") {
@@ -251,6 +265,11 @@ regexApp.factory('MethodService', function() {
             var cleanParam = this.cleanParam(param);
             return cleanParam;
         },
+        reorderSections: function (scope, regexSections, order) {
+            angular.forEach(regexSections, function (item, i) {
+                item.sortOrder = order[i];
+            });
+        },
         cleanParam: function (param) {
 
             if (typeof param === "number") {
@@ -291,6 +310,7 @@ regexApp.factory('MethodService', function() {
         updateUi: function (scope) {
             scope.js_code = this.renderJsCode(scope.regexSections);
             scope.regex = this.buildRegex(scope, scope.js_code);
+            this.runTest(scope, scope.testString);
         },
         /**
          * Remove a regex section and return the scope.
@@ -376,9 +396,15 @@ regexApp.factory('MethodService', function() {
         },
         getShorthandRegexTestCode: function (shorthandRegex, testString) {
 
+            var replaceCode = "%s2";
+
+            if (testString === "") {
+                replaceCode = '"%s2"';
+            }
+
             var string = this.shorthandRegexCode
                     .replace("%s1", shorthandRegex)
-                    .replace("%s2", testString);
+                    .replace(replaceCode, testString);
 
             return string;
         },
@@ -392,7 +418,7 @@ regexApp.factory('MethodService', function() {
             return this.regexTestCode.replace('"%s"', "");
         },
         initShorthandRegex: function () {
-            return this.shorthandRegexCode.replace("%s1", "//gm").replace("%s2", "");
+            return this.shorthandRegexCode.replace("%s1", "//gm").replace('"%s2"', "");
         },
         regex_starter_code: "var tester = new RegExp();",
         js_code: "VerEx()",
