@@ -236,30 +236,31 @@ describe('Methods List E2E', function () {
 
         });
 
-//    describe("the shorthand Regex section", function () {
-//
-//        it('should start with the correct default value', function () {
-//            var shorthandRegex = element("#shorthand-regex");
-//            expect(shorthandRegex.text()).toBe("");
-//        });
-//
-//        it('should be updated with the correct value when a section is added', function () {
-//
-//            var shorthandRegex = element("#shorthand-regex");
-//            thenInput.val("shane");
-//            fireInput(thenInput);
-//            element("#button-add-then").click();
-//            expect(shorthandRegex.text()).toBe("/(?:shane)/gm");
-//        });
-//
-//        it('should be reset when the reset method is called', function () {
-//            var shorthandRegex = element("#shorthand-regex");
-//            thenInput.val("shane");
-//            fireInput(thenInput);
-//            element("#button-add-then").click();
-//            resetBtn.click();
-//            expect(shorthandRegex.text()).toBe("");
-//        });
-//    });
+    describe("the shorthand Regex section", function () {
 
+        var shorthandRegex;
+        beforeEach(function(){
+            shorthandRegex = element("#shorthandRegex");
+        });
+
+        it('should start with the correct default value', function () {
+            expect(shorthandRegex.text()).toBe('//gm.test("")');
+        });
+
+        it('should be updated with the correct value when a section is added', function () {
+            thenInput.val("shane");
+            fireInput(thenInput);
+            element("#button-add-then").click();
+            expect(shorthandRegex.text()).toBe('/(?:shane)/gm.test("")');
+        });
+
+        it('should be reset when the reset method is called', function () {
+
+            thenInput.val("shane");
+            fireInput(thenInput);
+            element("#button-add-then").click();
+            resetBtn.click();
+            expect(shorthandRegex.text()).toBe('//gm.test("")');
+        });
+    });
 });

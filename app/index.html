@@ -129,10 +129,11 @@
                 <div class="intro" id="intro" ng-show="!data.regexSections.length">
                     <p class="intro__arrow"><span class="icon-arrow-left"></span></p>
                      <p class="intro__text">Add sections from the menu on the left & you'll see the Regex being built up below.</p>
-
                 </div>
 
                 <!--<p>Javascript Regular Expression:</p>-->
+                <br/>
+                <p class="intro__text left"><strong>The Long-Hand Version</strong></p>
                 <div class="regex">
 
                     <pre class="snippet">
@@ -140,6 +141,10 @@
 
 {{ data.regexTestCode }}</pre>
 
+                    <p class="intro__text left"><strong>The Short-Hand Version</strong></p>
+                    <pre class="snippet">
+<code id="shorthandRegex">{{ data.sh_regex_code }}</code>
+                    </pre>
                 </div>
 
                 <div id="test-container" ng-show="data.regexSections.length">

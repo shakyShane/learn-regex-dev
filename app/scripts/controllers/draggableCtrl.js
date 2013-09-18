@@ -1,4 +1,4 @@
-angular.module('ngRegexApp').controller('DraggleCtrl', ['$scope', '$rootScope', 'MethodService', 'DataStore',  function ($scope, $rootScope, MethodService, DataStore) {
+angular.module('ngRegexApp').controller('DraggleCtrl', function ($scope, $rootScope, MethodService, DataStore) {
 
     $scope.data = DataStore;
     var $sortable = jQuery(".sortable");
@@ -29,4 +29,4 @@ angular.module('ngRegexApp').controller('DraggleCtrl', ['$scope', '$rootScope', 
         $sortable.off('sortupdate');
         $sortable.sortable().bind('sortupdate', updateSortOrder);
     });
-}]);
+});

@@ -71,6 +71,9 @@ regexApp.factory('MethodService', function() {
             return string;
 
         },
+        buildShortHandCode: function (scope, shorthand, testString) {
+            return shorthand;
+        },
         buildRegex: function (scope, js_code, lastAdded) {
 
             try {
@@ -80,7 +83,8 @@ regexApp.factory('MethodService', function() {
                 return false;
             }
 
-            scope.shorthandRegex = code.shorthand;
+            scope.sh_regex = this.buildShortHandCode(scope, code.shorthand, scope.testString);
+            scope.sh_regex_code = this.getShorthandRegexTestCode(scope.sh_regex, scope.testString);
 
             var newcode = code.longhand.replace(/^\//, "");
             var modCodes = /[a-z]{1,4}$/.exec(newcode);
@@ -156,21 +160,28 @@ regexApp.factory('MethodService', function() {
         },
         runTest: function (scope, testString) {
 
+            var cleanTestString = this.escapeQuotes(testString);
+
             if (!testString || testString === "") {
                 this.resetRegexTestCode(scope);
+                this.resetShorthandRegexTestCode(scope);
                 this.resetResult(scope);
                 return false;
             }
 
-            var resultCode = this.buildJsTestCode(scope.js_code, testString);
+            var resultCode = this.buildJsTestCode(scope.js_code, cleanTestString);
             var result = eval(resultCode);
 
-            scope.regexTestCode = this.getRegexTestCode(testString);
+            scope.regexTestCode = this.getRegexTestCode(cleanTestString);
+            scope.sh_regex_code = this.getShorthandRegexTestCode(scope.sh_regex, cleanTestString);
 
             return scope.result = result;
         },
         resetRegexTestCode: function (scope) {
             scope.regexTestCode = this.initRegexTestCode();
+        },
+        resetShorthandRegexTestCode: function (scope) {
+            scope.sh_regex_code = this.getShorthandRegexTestCode(scope.sh_regex, '');
         },
         resetResult: function (scope) {
             scope.result = 'n/a';
@@ -211,16 +222,21 @@ regexApp.factory('MethodService', function() {
             }
 
             return section.$$hashKey;
+
         },
         buildJsTestCode: function (js_code, testString) {
 
-            testString = this.escapeQuotes(testString); //ensure any double quotes are escaped
             var code = "var tester = " + js_code + '; tester.test("' + testString + '")';
 
             return code;
         },
         escapeQuotes: function (string) {
-            return string.replace(/"/g, '\\"'); // NOT THIS
+            if (typeof string === "string") {
+                return string.replace(/"/g, '\\"');
+            } else {
+                return string;
+            }
+
         },
         transformParam: function (method, param, param2) {
 
@@ -266,7 +282,8 @@ regexApp.factory('MethodService', function() {
             scope.js_code = this.initJs();
             scope.regex = this.initRegex();
             scope.result = "n/a";
-            scope.shorthandRegex = '';
+            scope.sh_regex = '';
+            scope.sh_regex_code = this.initShorthandRegex();
             scope.regexTestCode = this.initRegexTestCode();
 
             return scope;
@@ -353,9 +370,17 @@ regexApp.factory('MethodService', function() {
             return regexes;
         },
         getRegexTestCode: function (testString) {
-            testString = this.escapeQuotes(testString);
+
             var replaced = this.regexTestCode.replace("%s", testString);
             return replaced;
+        },
+        getShorthandRegexTestCode: function (shorthandRegex, testString) {
+
+            var string = this.shorthandRegexCode
+                    .replace("%s1", shorthandRegex)
+                    .replace("%s2", testString);
+
+            return string;
         },
         initJs: function () {
             return this.js_starter_code;
@@ -366,10 +391,14 @@ regexApp.factory('MethodService', function() {
         initRegexTestCode: function () {
             return this.regexTestCode.replace('"%s"', "");
         },
+        initShorthandRegex: function () {
+            return this.shorthandRegexCode.replace("%s1", "//gm").replace("%s2", "");
+        },
         regex_starter_code: "var tester = new RegExp();",
         js_code: "VerEx()",
         js_starter_code: "VerEx()",
         regexTestCode: 'tester.test("%s");',
+        shorthandRegexCode: '%s1.test("%s2")',
         result: "n/a",
         sharedProperties: ['js_code', 'regexTestCode', 'result', 'regexSections', 'regex']
     }
