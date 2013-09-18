@@ -5,7 +5,7 @@ regexApp.service('DataStore', function() {
         regexSections: [],
         regex: 'var tester = new RegExp();',
         sh_regex: '//gm',
-        sh_regex_code: '//gm.test("")',
+        sh_regex_code: '//gm.test()',
         regex_starter_code: "var tester = new RegExp();",
         js_code: "VerEx()",
         js_starter_code: "VerEx()",
