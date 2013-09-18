@@ -20,7 +20,7 @@ describe('Methods List E2E', function () {
         });
     }
 
-    var rangeInput1, rangeInput2, thenInput, testInput, resetBtn;
+    var rangeInput1, rangeInput2, thenInput, testInput, resetBtn, testButton;
 
     beforeEach(function() {
         browser().navigateTo('/index.html');
@@ -30,6 +30,7 @@ describe('Methods List E2E', function () {
         thenInput =  element('#input-then');
         testInput = element('#input-test');
         resetBtn = element('#btn-reset');
+        testButton = element("#btn-run-test");
 
     });
 
@@ -203,6 +204,7 @@ describe('Methods List E2E', function () {
                 element("#button-add-then").click();
                 expect(testContainer.count()).toBe(1);
             });
+
             it("should be visible when a section is added", function () {
                 thenInput.val("shane");
                 fireInput(thenInput);
@@ -244,14 +246,14 @@ describe('Methods List E2E', function () {
         });
 
         it('should start with the correct default value', function () {
-            expect(shorthandRegex.text()).toBe('//gm.test("")');
+            expect(shorthandRegex.text()).toBe('//gm.test()');
         });
 
         it('should be updated with the correct value when a section is added', function () {
             thenInput.val("shane");
             fireInput(thenInput);
             element("#button-add-then").click();
-            expect(shorthandRegex.text()).toBe('/(?:shane)/gm.test("")');
+            expect(shorthandRegex.text()).toBe('/(?:shane)/gm.test()');
         });
 
         it('should be reset when the reset method is called', function () {
@@ -260,7 +262,22 @@ describe('Methods List E2E', function () {
             fireInput(thenInput);
             element("#button-add-then").click();
             resetBtn.click();
-            expect(shorthandRegex.text()).toBe('//gm.test("")');
+
+            expect(shorthandRegex.text()).toBe('//gm.test()');
+        });
+
+        ddescribe("adding test strings", function () {
+            it("should update the test code with the test string", function () {
+                thenInput.val("shane");
+                fireInput(thenInput);
+                element("#button-add-then").click();
+
+                testInput.val("a']\"");
+                fireInput(testInput);
+                testButton.click();
+
+                expect(shorthandRegex.text()).toBe('/(?:shane)/gm.test("a\']\\"")');
+            });
         });
     });
 });

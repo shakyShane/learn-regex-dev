@@ -58,7 +58,7 @@ describe('Methods service to Shorthand Regex: ', function () {
     describe("the shorthand regex code with the test string", function () {
 
         it("should be initialised with the starter code.", function () {
-            expect(dataStore.sh_regex_code).toBe('//gm.test("")');
+            expect(dataStore.sh_regex_code).toBe('//gm.test()');
         });
 
         describe("when updating the test string", function () {
@@ -66,7 +66,7 @@ describe('Methods service to Shorthand Regex: ', function () {
 
             it("should update when a THEN sectioned added", function () {
                 methodService.addSection(dataStore, scope.methods._then, "*");
-                expect(dataStore.sh_regex_code).toBe('/(?:\\*)/gm.test("")');
+                expect(dataStore.sh_regex_code).toBe('/(?:\\*)/gm.test()');
             });
 
             it("should update when THEN sections are added", function () {
@@ -83,7 +83,7 @@ describe('Methods service to Shorthand Regex: ', function () {
                 methodService.addSection(dataStore, scope.methods._then, "*");
                 methodService.runTest(dataStore, '*"kittie');
                 methodService.reset(dataStore);
-                expect(dataStore.sh_regex_code).toBe('//gm.test("")');
+                expect(dataStore.sh_regex_code).toBe('//gm.test()');
             });
             it("should return to default if an empty test string was provided", function () {
 
@@ -92,7 +92,7 @@ describe('Methods service to Shorthand Regex: ', function () {
                 expect(dataStore.sh_regex_code).toBe('/(?:\\*)/gm.test("shane")');
 
                 methodService.runTest(dataStore, '');
-                expect(dataStore.sh_regex_code).toBe('/(?:\\*)/gm.test("")');
+                expect(dataStore.sh_regex_code).toBe('/(?:\\*)/gm.test()');
             });
         });
     });
