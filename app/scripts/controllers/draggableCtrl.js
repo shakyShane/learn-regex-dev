@@ -5,23 +5,17 @@ angular.module('ngRegexApp').controller('DraggleCtrl', function ($scope, $rootSc
 
     var updateSortOrder = function () {
 
+        var newOrder = [];
         $scope.$apply(function () {
-            var order = [];
-            $sortable.find('li').each(function (i, item) {
-                var order = jQuery(this).attr('rel');
-                angular.forEach($scope.data.regexSections, function (item) {
-                    if (item.$$hashKey === order) {
-                        item.sortOrder = i;
-                    }
-                });
-            });
 
-            DataStore.js_code = MethodService.renderJsCode($scope.data.regexSections);
-            DataStore.regex = MethodService.renderRegexCode($scope, DataStore.js_code);
+            var newOrder = MethodService.extractOrderFromDom($sortable.find('li'), DataStore);
 
+            // _todo Add controller test to ensure all of this happens on a re-order
+            MethodService.reorderSections(DataStore, DataStore.regexSections, newOrder);
+            MethodService.updateUi(DataStore);
             MethodService.runTest(DataStore, DataStore.testString);
-        });
 
+        });
     };
 
     $scope.$on('addSortable', function () {
