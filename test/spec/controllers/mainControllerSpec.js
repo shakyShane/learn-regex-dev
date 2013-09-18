@@ -66,24 +66,24 @@ describe("Controller: MainCtrl", function () {
 
     describe('Shorthand Regex Section', function () {
 
-        it('should be defined upin init', function () {
-            expect(scope.data.shorthandRegex).toBeDefined();
+        it('should be defined upon init', function () {
+            expect(scope.data.sh_regex).toBeDefined();
         });
 
         it('should have the correct value after a section is added', function () {
             methodService.addSection(dataStore, methods._then, "shane");
-            expect(scope.data.shorthandRegex).toBe("/(?:shane)/gm");
+            expect(scope.data.sh_regex).toBe("/(?:shane)/gm");
         });
 
         it('should not escape double quotes', function () {
             methodService.addSection(dataStore, methods._then, '"');
-            expect(scope.data.shorthandRegex).toBe('/(?:")/gm');
+            expect(scope.data.sh_regex).toBe('/(?:")/gm');
         });
 
         it("should be reset when the reset method is called", function () {
             methodService.addSection(dataStore, methods._then, '"');
             methodService.reset(dataStore);
-            expect(scope.data.shorthandRegex).toBe('');
+            expect(scope.data.sh_regex).toBe('');
         });
 
     });
