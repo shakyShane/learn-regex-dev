@@ -22,4 +22,7 @@
     span[class^="icon"] {
       color: $c-blue-light;
     }
+    &.left {
+      text-align: left;
+    }
   }

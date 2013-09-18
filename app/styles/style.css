@@ -3864,7 +3864,7 @@ aside a:visited {
 /* A code snippet that has been syntax highlighted */
 
 .content .snippet {
-  margin: 1.3em 0 1em;
+  margin: 5px 0 3em;
   padding: 1.3em;
 }
 
@@ -4162,6 +4162,7 @@ code {
   font-family: Consolas, 'Liberation Mono', Courier, monospace;
   color: #333333;
   background: #fafafa;
+  color: #4c597b;
 }
 
 pre .comment {
@@ -4522,6 +4523,7 @@ li.sortable-placeholder {
   margin: 0;
   margin-top: 1.2em;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .sortable li {
@@ -4700,6 +4702,10 @@ p.intro__text {
 
 p.intro__text span[class^="icon"] {
   color: #4c597b;
+}
+
+p.intro__text.left {
+  text-align: left;
 }
 
 .share-icon span {

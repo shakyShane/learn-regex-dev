@@ -143,9 +143,10 @@ aside a, aside a:visited {
 
 /* A code snippet that has been syntax highlighted */
 .content .snippet {
-  margin: 1.3em 0 1em;
+  margin: 5px 0 3em;
   padding: 1.3em;
 }
+
 
 .content .content-quote {
   font-family: "Georgia", serif;
@@ -457,6 +458,7 @@ pre, code {
   font-family: Consolas, 'Liberation Mono', Courier, monospace;
   color: #333;
   background: rgb(250, 250, 250);
+  color: #4c597b;
 }
 
 pre .comment {
