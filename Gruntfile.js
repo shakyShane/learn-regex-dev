@@ -48,7 +48,7 @@ module.exports = function (grunt) {
                 urlTransforms: {
                     remove: "app/"
                 },
-                host: "192.168.0.7",
+                host: "0.0.0.0",
                 server: {
                     baseDir: "app"
                 }
