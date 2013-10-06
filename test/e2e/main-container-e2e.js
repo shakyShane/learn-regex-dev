@@ -20,13 +20,15 @@ describe('Methods List E2E', function () {
         });
     }
 
-    var rangeInput1, rangeInput2, thenInput, testInput, resetBtn, testButton;
+    var rangeInput1, rangeInput2, thenInput, testInput, resetBtn, testButton, numMatchesInput1, numMatchesInput2;
 
     beforeEach(function() {
         browser().navigateTo('/index.html');
         this.regexCode = element("#regexCode");
         rangeInput1 = element('#range-input-01');
         rangeInput2 = element('#range-input-02');
+        numMatchesInput1 = element('#numMatches-input-01');
+        numMatchesInput2 = element('#numMatches-input-02');
         thenInput =  element('#input-then');
         testInput = element('#input-test');
         resetBtn = element('#btn-reset');
@@ -107,6 +109,27 @@ describe('Methods List E2E', function () {
             button.click();
             expect(this.regexCode.text()).toBe(item[2]);
         }, this);
+    });
+
+    it("should accept 2 param inputs for the Num Matches method", function () {
+
+        var button = element("#button-add-numMatches");
+
+        var numMatches = [
+            ['1', '2', 'var tester = new RegExp("(?:a){1,2}", "gm");'],
+            ['3', '4', 'var tester = new RegExp("(?:a){3,4}", "gm");']
+        ];
+
+        thenInput.val("a");
+        fireInput(thenInput);
+        element("#button-add-then").click();
+
+        numMatchesInput1.val("1");
+        numMatchesInput2.val("2");
+        fireInput(numMatchesInput1);
+        fireInput(numMatchesInput2);
+        button.click();
+        expect(this.regexCode.text()).toBe('var tester = new RegExp("(?:a){1,2}", "gm");');
     });
 
     it("should clear both input fields when a range was added", function () {
@@ -266,7 +289,7 @@ describe('Methods List E2E', function () {
             expect(shorthandRegex.text()).toBe('//gm.test()');
         });
 
-        ddescribe("adding test strings", function () {
+        describe("adding test strings", function () {
             it("should update the test code with the test string", function () {
                 thenInput.val("shane");
                 fireInput(thenInput);
