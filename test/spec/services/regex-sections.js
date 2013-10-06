@@ -26,7 +26,6 @@ describe('Service: Methods functionality', function () {
 
         methodService.addSection(dataStore, scope.methods._startOfLine, "");
         methodService.addSection(dataStore, scope.methods._then, "testString");
-        expect(dataStore.js_code).toBeDefined();
         expect(dataStore.js_code).toBe('VerEx().startOfLine().then("testString")');
         expect(dataStore.regex).toBe('var tester = new RegExp("^(?:testString)", "gm");');
     });
@@ -35,7 +34,6 @@ describe('Service: Methods functionality', function () {
     it('should add a "With any Case" Modifier', function () {
         methodService.addSection(dataStore, scope.methods._withAnyCase, "");
         methodService.addSection(dataStore, scope.methods._then, "testString");
-        expect(dataStore.js_code).toBeDefined();
         expect(dataStore.js_code).toBe('VerEx().withAnyCase().then("testString")');
         expect(dataStore.regex).toBe('var tester = new RegExp("(?:testString)", "gim");');
     });
@@ -44,7 +42,6 @@ describe('Service: Methods functionality', function () {
     it('should add a "end of line" Modifier', function () {
         methodService.addSection(dataStore, scope.methods._endOfLine, "");
         methodService.addSection(dataStore, scope.methods._then, "testString");
-        expect(dataStore.js_code).toBeDefined();
         expect(dataStore.js_code).toBe('VerEx().endOfLine().then("testString")');
         expect(dataStore.regex).toBe('var tester = new RegExp("(?:testString)$", "gm");');
     });
@@ -54,7 +51,6 @@ describe('Service: Methods functionality', function () {
     //Then
     it('should add multiple "Then" groups', function () {
         methodService.addSection(dataStore, scope.methods._then, "test");
-        expect(dataStore.js_code).toBeDefined();
         expect(dataStore.js_code).toBe('VerEx().then("test")');
         expect(dataStore.regex).toBe('var tester = new RegExp("(?:test)", "gm");');
 
@@ -66,7 +62,6 @@ describe('Service: Methods functionality', function () {
     // Maybe + then
     it('should add a mixture of Maybe & then groups', function () {
         methodService.addSection(dataStore, scope.methods._maybe, "test");
-        expect(dataStore.js_code).toBeDefined();
         expect(dataStore.js_code).toBe('VerEx().maybe("test")');
         expect(dataStore.regex).toBe('var tester = new RegExp("(?:test)?", "gm");');
 
@@ -98,7 +93,7 @@ describe('Service: Methods functionality', function () {
         expect(dataStore.regex).toBe('var tester = new RegExp("[a-z]", "gm");');
     });
 
-    // Range - Not implemented yet!
+    // Range
     it('Should correctly add multiple "range" groups with strings or numbers', function () {
         methodService.addSection(dataStore, scope.methods._range, "a", "z");
         methodService.addSection(dataStore, scope.methods._range, "0", "9");
@@ -155,33 +150,118 @@ describe('Service: Methods functionality', function () {
 
     describe("the Space Section", function () {
 
-        it("should be added", function () {
-
-            methodService.addSection(dataStore, scope.methods._space);
-            expect(dataStore.js_code).toBe('VerEx().then(" ")');
-            expect(dataStore.regex).toBe('var tester = new RegExp("(?: )", "gm");');
+        describe("being added", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._space);
+            });
+            it("should update the Js Code", function () {
+                expect(dataStore.js_code).toBe('VerEx().then(" ")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?: )", "gm");');
+            });
         });
 
-        it("should be added in the middle of a bunch of sections", function () {
-
-            methodService.addSection(dataStore, scope.methods._then, "shane");
-            methodService.addSection(dataStore, scope.methods._space);
-            methodService.addSection(dataStore, scope.methods._maybe, "osbourne");
-
-            expect(dataStore.js_code).toBe('VerEx().then("shane").then(" ").maybe("osbourne")');
-            expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane)(?: )(?:osbourne)?", "gm");');
+        describe("added in the middle of a bunch of sections", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._space);
+                methodService.addSection(dataStore, scope.methods._maybe, "osbourne");
+            });
+            it("should update the JS code", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("shane").then(" ").maybe("osbourne")');
+            });
+            it("should update the regex code", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane)(?: )(?:osbourne)?", "gm");');
+            });
         });
-
     });
 
+    describe("the 'numMatches' section", function () {
+        describe("adding without any other sections (eg: /{1,2}/.test() ", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._numMatches, "2");
+            });
+            it("should not update the JS code", function () {
+                expect(dataStore.js_code).toBe("VerEx()");
+            });
+            it("should not update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp();');
+            });
+            it("should set an error message", function () {
+                expect(dataStore.errorMessage.length).toBeTruthy();
+            });
+        });
+        describe("with 1 param", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._numMatches, "2");
+            });
+            it("should update the fields", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("shane").numMatches("2")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane){2}", "gm");');
+            });
+        });
+        describe("with 1 param mulitple times", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._numMatches, "2");
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._numMatches, "3");
+            });
+            it("should update the fields", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("shane").numMatches("2").then("shane").numMatches("3")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane){2}(?:shane){3}", "gm");');
+            });
+        });
+        describe("with 2 params", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._numMatches, "2", "3");
+            });
+            it("should update the JS code", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("shane").numMatches("2", "3")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane){2,3}", "gm");');
+            });
+        });
+        describe("with 2 params multiple times", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "a");
+                methodService.addSection(dataStore, scope.methods._numMatches, "2", "3");
+                methodService.addSection(dataStore, scope.methods._then, "a");
+                methodService.addSection(dataStore, scope.methods._numMatches, "1", "2");
+            });
+            it("should update the JS code", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("a").numMatches("2", "3").then("a").numMatches("1", "2")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:a){2,3}(?:a){1,2}", "gm");');
+            });
+        });
 
-//    var testString = "3";
-//    var tester = new RegExp("\\t", "gm");
-
-
-//    console.log(tester.test("thatweferger"));
-//        var tester = new RegExp("[1-3]", "gm");
-//        console.log(tester.test(testString));
-//        testString = testString.replace(tester, ",");
-//        console.log(testString);
+        describe("handing errors when params in wrong order", function () {
+            beforeEach(function(){
+                methodService.addSection(dataStore, scope.methods._then, "shane");
+                methodService.addSection(dataStore, scope.methods._numMatches, "1", "0");
+            });
+            it("should not add the section", function () {
+                expect(dataStore.regexSections.length).toBe(1);
+            });
+            it("should not update the JS code", function () {
+                expect(dataStore.js_code).toBe('VerEx().then("shane")');
+            });
+            it("should update the regex", function () {
+                expect(dataStore.regex).toBe('var tester = new RegExp("(?:shane)", "gm");');
+            });
+            it("should set an error message", function () {
+                expect(dataStore.errorMessage.length).toBeTruthy();
+            });
+        });
+    });
 });

@@ -7,7 +7,7 @@ This first release can be seen as a proof-of-concept. In future releases I would
 
 1. More 'sections' added so that more complicated regular expressions can be created.
 2. Alternative output of the regex. Right now it's pretty verbose & accurate, but I'd like to offer the alternative short-hand style too. (like `/\.css$/gm.test('.css')` for example)
-3. Offer the ability to change the language that is output (i.e. show the same regex, but in PHP, Ruby, Java etc.)
+3. Offer the ability to change the language that is output (i.e. show the same regex, but in PHP, Ruby, Java etc.) 
 
 ###Contributing Guide
 Contributions are welcomed providing they have accompanying tests. If you are planning any major 
