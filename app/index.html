@@ -59,17 +59,17 @@
                             <input
                                     type="text"
                                     class="range-input"
-                                    id="range-input-01"
+                                    id="{{method.method}}-input-01"
                                     ng-model="method.inputVal1"
-                                    placeholder="..."
+                                    placeholder="start..."
                                     ng-trim='false'
                                     ng-if="method.range"/>
 
                             <input
                                     type="text"
                                     class="range-input"
-                                    id="range-input-02"
-                                    placeholder="..."
+                                    id="{{method.method}}-input-02"
+                                    placeholder="end..."
                                     ng-trim='false'
                                     ng-model="method.inputVal2"
                                     ng-if="method.range"/>
@@ -83,7 +83,7 @@
 
                     <div
                             class="regex-section__button"
-                            id="button-add-range"
+                            id="button-add-{{method.method}}"
                             ng-if="method.range"
                             ng-click="addRangeSection(method, method.inputVal1, method.inputVal2);">
                         <span class="icon-arrow-right-2"></span>
