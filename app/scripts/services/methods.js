@@ -10,7 +10,7 @@ regexApp.factory('Methods', function() {
             "_anyOf"       : { name: 'Any of these:',   method: "anyOf",     type: "input", input: true, listSortOrder: 3}, // test √
             "_anythingBut" : { name: 'NOT any of these', method: "anythingBut", type: "input", input: true, listSortOrder: 4 }, // test √
             "_range"       : { name: 'Range',    method: 'range',     type: "range", input: false, range: true, listSortOrder: 5, errorMsg: "You can't do that with the Range input." }, //test √
-            "_numMatches"  : { name: '# Matches',     method: 'numMatches', rangeOptional: true, type: "range",  range: true, input: false, listSortOrder: 6, errorMsg: "Sorry, you can't do that."  },
+            "_numMatches"  : { name: '# Matches',     method: 'numMatches', rangeOptional: true, type: "range",  range: true, input: false, listSortOrder: 6, errorMsg: "Sorry, you can't do that. (needs to be after a capture group)"  },
             "_startOfLine" : { name: 'Start of Line',  method: "startOfLine", type: "modifier", input: false, listSortOrder: 7 }, //test √
             "_withAnyCase" : { name: 'With Any Case',  method: "withAnyCase", type: "modifier", input: false, listSortOrder: 8 }, //test √
             "_endOfLine"   : { name: 'End of Line',    method: 'endOfLine',   type: "modifier", input: false, listSortOrder: 9 }, //test √
