@@ -54,8 +54,12 @@ regexApp.factory('MethodService', function() {
                 return false;
             }
             if (method.type === "range") {
-                if (typeof param === "undefined" || typeof param2 === "undefined" ) {
-                    return false;
+                if (!method.rangeOptional) {
+                    if (typeof param === "undefined" || typeof param2 === "undefined" ) {
+                        return false;
+                    } else {
+                        if (typeof param === "undefined") return false;
+                    }
                 }
             }
             return true;
@@ -79,6 +83,7 @@ regexApp.factory('MethodService', function() {
             try {
                 var code = this.createRegexes(js_code);
             } catch (e) {
+//                console.log(e);
                 this.showError(scope, e, lastAdded);
                 return false;
             }
@@ -103,6 +108,7 @@ regexApp.factory('MethodService', function() {
             }
         },
         addRegexSection: function (scope, lastAdded) {
+
             var regex = this.buildRegex(scope, scope.js_code, lastAdded);
             if (regex) {
                 scope.regex = regex;
@@ -127,9 +133,12 @@ regexApp.factory('MethodService', function() {
                     param = '"' + param + '"';
                 }
             }
-
             if (method.type == "range") {
-                param = '"' + param[0] +'", "' + param[1] + '"';
+                if (param.length === 2) {
+                    param = '"' + param[0] +'", "' + param[1] + '"';
+                } else {
+                    param = '"' + param + '"';
+                }
             }
 
             // Either append to exising JS code, or start from scratch
@@ -255,7 +264,15 @@ regexApp.factory('MethodService', function() {
         transformParam: function (method, param, param2) {
 
             if (method.type === "range") {
-                return [this.cleanParam(param), this.cleanParam(param2)];
+                if(method.rangeOptional) {
+                    if (param && param2) {
+                        return [this.cleanParam(param), this.cleanParam(param2)];
+                    } else {
+                        return this.cleanParam(param);
+                    }
+                } else {
+                    return [this.cleanParam(param), this.cleanParam(param2)];
+                }
             }
 
             if (method.name === "Space") {
