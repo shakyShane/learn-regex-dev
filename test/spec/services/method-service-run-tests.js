@@ -342,4 +342,80 @@ describe('Method Service: When running tests', function () {
             expect(test).toBe(false);
         });
     });
+    describe("the numMatches section", function () {
+        describe("with 1 param & 1 match", function () {
+            beforeEach(function(){
+                methodService.addSection(scope, methods._then, "a");
+                methodService.addSection(scope, methods._numMatches, "1");
+            });
+            it("should run a true test", function () {
+                var test = methodService.runTest(scope, "a");
+                expect(test).toBe(true);
+            });
+            it("should run a false test", function () {
+                var test = methodService.runTest(scope, "b");
+                expect(test).toBe(false);
+            });
+        });
+        describe("with 1 param & 2 matches", function () {
+            beforeEach(function(){
+                methodService.addSection(scope, methods._then, "a");
+                methodService.addSection(scope, methods._numMatches, "2");
+            });
+            it("should run a true test", function () {
+                var test = methodService.runTest(scope, "aa");
+                expect(test).toBe(true);
+            });
+            it("should run a false test", function () {
+                var test = methodService.runTest(scope, "a");
+                expect(test).toBe(false);
+            });
+        });
+        describe("with 2 param & between 2 & 4matches", function () {
+            beforeEach(function(){
+                methodService.addSection(scope, methods._then, "a");
+                methodService.addSection(scope, methods._numMatches, "2", "4");
+            });
+            it("should run a true test (1)", function () {
+                var test = methodService.runTest(scope, "aa");
+                expect(test).toBe(true);
+            });
+            it("should run a true test (2)", function () {
+                var test = methodService.runTest(scope, "aaa");
+                expect(test).toBe(true);
+            });
+            it("should run a true test (3)", function () {
+                var test = methodService.runTest(scope, "aaaa");
+                expect(test).toBe(true);
+            });
+            it("should run a FALSE test", function () {
+                var test = methodService.runTest(scope, "a");
+                expect(test).toBe(false);
+            });
+        });
+        describe("with 1 param, 1 match multiple times", function () {
+            beforeEach(function(){
+                methodService.addSection(scope, methods._then, "a");
+                methodService.addSection(scope, methods._numMatches, "1");
+                methodService.addSection(scope, methods._then, "b");
+                methodService.addSection(scope, methods._numMatches, "2");
+            });
+            it("should run a true test (1)", function () {
+                var test = methodService.runTest(scope, "abb");
+                expect(test).toBe(true);
+            });
+            it("should run a true test (2)", function () {
+                var test = methodService.runTest(scope, "aaaaabb");
+                expect(test).toBe(true);
+            });
+            it("should run a true test (3)", function () {
+                var test = methodService.runTest(scope, "abbewe");
+                expect(test).toBe(true);
+            });
+            it("should run a FALSE test", function () {
+                var test = methodService.runTest(scope, "bba");
+                expect(test).toBe(false);
+            });
+        });
+    });
 });
